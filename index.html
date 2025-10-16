@@ -118,6 +118,38 @@
             background: #218838;
         }
         
+        .out-of-stock {
+            opacity: 0.7;
+        }
+        
+        .out-of-stock button {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        .stock-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        
+        .in-stock {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .low-stock {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .no-stock {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
         footer {
             background: #333;
             color: white;
@@ -142,6 +174,22 @@
             border-radius: 10px;
             margin: 2rem 0;
             text-align: center;
+            color: #333;
+        }
+        
+        .admin-link {
+            text-align: center;
+            margin: 2rem 0;
+        }
+        
+        .admin-link a {
+            color: #dc3545;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .admin-link a:hover {
+            text-decoration: underline;
         }
         
         @media (max-width: 768px) {
@@ -178,10 +226,15 @@
             </div>
         </section>
 
+        <div class="admin-link">
+            <a href="admin.html">🔧 Login Admin Panel</a>
+        </div>
+
         <div class="contact-info">
             <h2>Butuh Bantuan?</h2>
-            <p>Email: info@digineerstore.com</p>
-            <p>WhatsApp: +62 812-3456-7890</p>
+            <p>📧 Email: info@digineerstore.com</p>
+            <p>📱 WhatsApp: +62 812-3456-7890</p>
+            <p>🕒 Buka: Senin - Minggu, 09:00 - 21:00 WIB</p>
         </div>
     </div>
 
@@ -195,9 +248,9 @@
                 
                 <div class="footer-section">
                     <h3>Kontak</h3>
-                    <p>Email: info@digineerstore.com</p>
-                    <p>Telepon: (021) 1234-5678</p>
-                    <p>Alamat: Jakarta, Indonesia</p>
+                    <p>📧 Email: info@digineerstore.com</p>
+                    <p>📞 Telepon: (021) 1234-5678</p>
+                    <p>📍 Alamat: Jakarta, Indonesia</p>
                 </div>
                 
                 <div class="footer-section">
@@ -205,81 +258,126 @@
                     <p><a href="#" style="color: #fff;">Tentang Kami</a></p>
                     <p><a href="#" style="color: #fff;">Syarat & Ketentuan</a></p>
                     <p><a href="#" style="color: #fff;">Kebijakan Privasi</a></p>
+                    <p><a href="admin.html" style="color: #fff;">Admin Panel</a></p>
                 </div>
             </div>
         </div>
     </footer>
 
     <script>
-        // DATA PRODUK MANUAL - TIDAK PERLU BACKEND
-        const products = [
-            {
-                id: 1,
-                name: "Jasa Desain Logo Profesional",
-                price: 150000,
-                category: "Jasa",
-                image: "https://picsum.photos/seed/logo/400/300",
-                description: "Desain logo custom untuk brand Anda"
-            },
-            {
-                id: 2,
-                name: "Template Landing Page Premium",
-                price: 99000,
-                category: "Produk",
-                image: "https://picsum.photos/seed/template/400/300",
-                description: "Template website siap pakai"
-            },
-            {
-                id: 3,
-                name: "Editing Video Kreatif",
-                price: 250000,
-                category: "Kreatif",
-                image: "https://picsum.photos/seed/video/400/300",
-                description: "Editing video profesional untuk konten"
-            },
-            {
-                id: 4,
-                name: "Paket Social Media Management",
-                price: 500000,
-                category: "Jasa",
-                image: "https://picsum.photos/seed/sosmed/400/300",
-                description: "Kelola media sosial 1 bulan penuh"
-            },
-            {
-                id: 5,
-                name: "Mockup Produk 3D Premium",
-                price: 199000,
-                category: "Kreatif",
-                image: "https://picsum.photos/seed/mockup/400/300",
-                description: "Mockup 3D untuk presentasi produk"
-            },
-            {
-                id: 6,
-                name: "Website Toko Online",
-                price: 750000,
-                category: "Jasa",
-                image: "https://picsum.photos/seed/website/400/300",
-                description: "Website toko online lengkap dengan payment"
+        // DATA PRODUK - Disimpan di localStorage
+        function initializeProducts() {
+            const defaultProducts = [
+                {
+                    id: 'p1',
+                    name: "Jasa Desain Logo Profesional",
+                    price: 150000,
+                    category: "Jasa",
+                    image: "https://picsum.photos/seed/logo/400/300",
+                    description: "Desain logo custom untuk brand Anda dengan konsep unik dan profesional",
+                    stock: 5
+                },
+                {
+                    id: 'p2',
+                    name: "Template Landing Page Premium",
+                    price: 99000,
+                    category: "Produk",
+                    image: "https://picsum.photos/seed/template/400/300",
+                    description: "Template website responsive siap pakai dengan design modern",
+                    stock: 20
+                },
+                {
+                    id: 'p3',
+                    name: "Editing Video Kreatif",
+                    price: 250000,
+                    category: "Kreatif",
+                    image: "https://picsum.photos/seed/video/400/300",
+                    description: "Editing video profesional untuk konten YouTube, Instagram, dan media sosial",
+                    stock: 3
+                },
+                {
+                    id: 'p4',
+                    name: "Paket Social Media Management",
+                    price: 500000,
+                    category: "Jasa",
+                    image: "https://picsum.photos/seed/sosmed/400/300",
+                    description: "Kelola media sosial 1 bulan penuh termasuk content planning dan analitik",
+                    stock: 7
+                },
+                {
+                    id: 'p5',
+                    name: "Mockup Produk 3D Premium",
+                    price: 199000,
+                    category: "Kreatif",
+                    image: "https://picsum.photos/seed/mockup/400/300",
+                    description: "Mockup 3D high quality untuk presentasi produk dan portofolio",
+                    stock: 0
+                },
+                {
+                    id: 'p6',
+                    name: "Website Toko Online Lengkap",
+                    price: 750000,
+                    category: "Jasa",
+                    image: "https://picsum.photos/seed/website/400/300",
+                    description: "Website toko online lengkap dengan payment gateway dan admin panel",
+                    stock: 2
+                }
+            ];
+
+            // Cek jika produk sudah ada di localStorage
+            if (!localStorage.getItem('digineer-products')) {
+                localStorage.setItem('digineer-products', JSON.stringify(defaultProducts));
             }
-        ];
+            
+            return JSON.parse(localStorage.getItem('digineer-products'));
+        }
+
+        let products = initializeProducts();
 
         // TAMPILKAN PRODUK
         function displayProducts(productList = products) {
             const container = document.getElementById('products-container');
             container.innerHTML = '';
 
+            if (productList.length === 0) {
+                container.innerHTML = '<p style="text-align: center; grid-column: 1/-1; color: #666;">Tidak ada produk dalam kategori ini.</p>';
+                return;
+            }
+
             productList.forEach(product => {
+                const stockStatus = getStockStatus(product.stock);
+                const isOutOfStock = product.stock === 0;
+                
                 const productElement = `
-                    <div class="product">
+                    <div class="product ${isOutOfStock ? 'out-of-stock' : ''}">
                         <img src="${product.image}" alt="${product.name}">
                         <h3>${product.name}</h3>
                         <p>${product.description}</p>
-                        <div class="price">Rp ${product.price.toLocaleString()}</div>
-                        <button onclick="buyProduct(${product.id})">Beli Sekarang</button>
+                        <div class="price">
+                            Rp ${product.price.toLocaleString()}
+                            <span class="stock-badge ${stockStatus.class}">${stockStatus.text}</span>
+                        </div>
+                        <button 
+                            onclick="buyProduct('${product.id}')" 
+                            ${isOutOfStock ? 'disabled' : ''}
+                        >
+                            ${isOutOfStock ? 'Stok Habis' : 'Beli Sekarang'}
+                        </button>
                     </div>
                 `;
                 container.innerHTML += productElement;
             });
+        }
+
+        // CEK STATUS STOK
+        function getStockStatus(stock) {
+            if (stock === 0) {
+                return { class: 'no-stock', text: 'Stok Habis' };
+            } else if (stock <= 3) {
+                return { class: 'low-stock', text: `Stok ${stock}` };
+            } else {
+                return { class: 'in-stock', text: `Stok ${stock}` };
+            }
         }
 
         // FILTER PRODUK
@@ -299,14 +397,66 @@
             }
         }
 
-        // FUNGSI BELI
+        // FUNGSI BELI PRODUK
         function buyProduct(productId) {
             const product = products.find(p => p.id === productId);
-            alert(`Terima kasih! Anda akan membeli: ${product.name}\nHarga: Rp ${product.price.toLocaleString()}\n\nSilakan hubungi WhatsApp: +62 812-3456-7890 untuk pemesanan.`);
+            
+            if (!product) {
+                alert('Produk tidak ditemukan!');
+                return;
+            }
+            
+            if (product.stock === 0) {
+                alert('Maaf, stok produk ini sedang habis.');
+                return;
+            }
+
+            // Kurangi stok
+            product.stock--;
+            localStorage.setItem('digineer-products', JSON.stringify(products));
+            
+            // Simpan pesanan
+            saveOrder(product);
+            
+            const message = `Halo Digineer Store! Saya mau pesan:\n\n` +
+                          `📦 Produk: ${product.name}\n` +
+                          `💰 Harga: Rp ${product.price.toLocaleString()}\n` +
+                          `📋 Kategori: ${product.category}\n\n` +
+                          `Bisa info lebih lanjut untuk pemesanan?`;
+            
+            const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+            
+            alert(`✅ Berhasil memesan: ${product.name}\n\nSilakan lanjutkan konfirmasi via WhatsApp.`);
+            window.open(whatsappUrl, '_blank');
+            
+            // Refresh tampilan produk
+            displayProducts();
+        }
+
+        // SIMPAN PESANAN
+        function saveOrder(product) {
+            let orders = JSON.parse(localStorage.getItem('digineer-orders')) || [];
+            
+            const newOrder = {
+                id: 'order_' + Date.now(),
+                productName: product.name,
+                productId: product.id,
+                price: product.price,
+                category: product.category,
+                customerName: 'Pelanggan',
+                customerWhatsApp: '6281234567890',
+                total: product.price,
+                date: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            orders.push(newOrder);
+            localStorage.setItem('digineer-orders', JSON.stringify(orders));
         }
 
         // LOAD PRODUK SAAT PERTAMA KALI
         document.addEventListener('DOMContentLoaded', function() {
+            products = initializeProducts();
             displayProducts();
         });
     </script>
