@@ -3,8 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digineer Store - Solusi Digital Profesional</title>
-    <meta name="description" content="Jasa desain, development website, dan solusi digital kreatif untuk transformasi bisnis Anda. Tim profesional siap membantu.">
+    <title>Digineer Store - Solusi Digital Profesional & Jasa Kreatif</title>
+    <meta name="description" content="Jasa desain profesional, development website, digital marketing, dan solusi kreatif untuk transformasi bisnis Anda. Tim ahli siap membantu kesuksesan online.">
+    <meta name="keywords" content="jasa desain, website development, digital marketing, branding, UI/UX design, video editing, social media management">
+    <meta name="author" content="Digineer Store">
+    <meta name="robots" content="index, follow">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Digineer Store">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -12,7 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        /* === VARIABLES & RESET === */
+        /* === CSS VARIABLES & RESET === */
         :root {
             --primary: #6366f1;
             --primary-dark: #4f46e5;
@@ -44,12 +58,29 @@
             background: var(--light);
         }
 
+        /* === ACCESSIBILITY === */
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--dark);
+            color: white;
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 600;
+            z-index: 10000;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+        }
+
         /* === GLASS MORPHISM === */
         .glass {
             background: rgba(255, 255, 255, 0.25);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.18);
-            box-shadow: var(--shadow-lg);
         }
 
         /* === LOADING === */
@@ -161,6 +192,7 @@
             color: white;
             position: relative;
             overflow: hidden;
+            padding-top: 80px;
         }
 
         .hero-content {
@@ -508,7 +540,7 @@
         /* === NOTIFICATION === */
         .notification {
             position: fixed;
-            top: 1rem;
+            top: 100px;
             right: 1rem;
             background: white;
             padding: 1rem 1.5rem;
@@ -565,10 +597,13 @@
     </style>
 </head>
 <body>
+    <!-- Skip Link for Accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+
     <!-- Header -->
     <header class="header">
         <div class="nav-container">
-            <a href="#" class="logo">Digineer Store</a>
+            <a href="#home" class="logo">Digineer Store</a>
             
             <nav class="nav-links">
                 <a href="#home" class="nav-link">Home</a>
@@ -580,6 +615,7 @@
             <div class="nav-actions">
                 <button class="icon-btn wishlist-btn">
                     <i class="far fa-heart"></i>
+                    <span class="badge" id="wishlistBadge">0</span>
                 </button>
                 <button class="icon-btn cart-btn" onclick="toggleCart()">
                     <i class="fas fa-shopping-cart"></i>
@@ -600,7 +636,7 @@
                 <span style="display: block; color: var(--secondary);">Profesional</span>
             </h1>
             <p class="hero-subtitle">
-                Jasa desain, development website, dan solusi kreatif untuk transformasi bisnis Anda
+                Jasa desain, development website, dan solusi kreatif untuk transformasi bisnis Anda dengan tim ahli berpengalaman.
             </p>
             <div class="hero-actions">
                 <button class="btn btn-primary" onclick="scrollToProducts()">
@@ -672,7 +708,8 @@
                 category: 'design',
                 price: 2500000,
                 image: 'https://images.unsplash.com/photo-1565688534245-05d6b5be184a?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                description: 'Logo, brand guide, stationery design, dan social media kit lengkap'
+                description: 'Logo, brand guide, stationery design, dan social media kit lengkap',
+                badge: 'Popular'
             },
             {
                 id: 'p2',
@@ -680,7 +717,8 @@
                 category: 'development',
                 price: 3500000,
                 image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                description: 'Website perusahaan modern dengan CMS custom dan responsive design'
+                description: 'Website perusahaan modern dengan CMS custom dan responsive design',
+                badge: 'Featured'
             },
             {
                 id: 'p3',
@@ -688,7 +726,8 @@
                 category: 'video',
                 price: 5000000,
                 image: 'https://images.unsplash.com/photo-1554260570-9140fd3b7614?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                description: 'Video profil perusahaan profesional dengan animasi dan editing'
+                description: 'Video profil perusahaan profesional dengan animasi dan editing',
+                badge: 'Premium'
             },
             {
                 id: 'p4',
@@ -696,7 +735,8 @@
                 category: 'design',
                 price: 1500000,
                 image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                description: 'Desain user interface dan experience untuk aplikasi dan website'
+                description: 'Desain user interface dan experience untuk aplikasi dan website',
+                badge: 'Hot'
             },
             {
                 id: 'p5',
@@ -704,7 +744,8 @@
                 category: 'development',
                 price: 7500000,
                 image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                description: 'Website toko online lengkap dengan payment gateway dan admin panel'
+                description: 'Website toko online lengkap dengan payment gateway dan admin panel',
+                badge: 'Best Seller'
             },
             {
                 id: 'p6',
@@ -712,7 +753,8 @@
                 category: 'design',
                 price: 800000,
                 image: 'https://images.unsplash.com/photo-1611162617474-5b21e879e113?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80',
-                description: 'Paket konten media sosial 1 bulan dengan design yang konsisten'
+                description: 'Paket konten media sosial 1 bulan dengan design yang konsisten',
+                badge: 'New'
             }
         ];
 
@@ -722,10 +764,19 @@
         let currentFilter = 'all';
         let currentSearch = '';
 
+        // ====== WHATSAPP NUMBER ======
+        const WHATSAPP_NUMBER = '089507083879';
+
         // ====== INITIALIZE ======
         function initialize() {
             displayProducts();
             updateCartUI();
+            updateWishlistUI();
+            
+            // Show welcome notification
+            setTimeout(() => {
+                showNotification('Selamat datang di Digineer Store! 🚀', 'success');
+            }, 1000);
         }
 
         // ====== DISPLAY PRODUCTS ======
@@ -755,7 +806,7 @@
                         <h3 class="product-title">${product.name}</h3>
                         <p class="product-description">${product.description}</p>
                         <div class="product-footer">
-                            <div class="product-price">Rp ${product.price.toLocaleString()}</div>
+                            <div class="product-price">Rp ${product.price.toLocaleString('id-ID')}</div>
                             <div class="product-actions">
                                 <button class="action-btn btn-wishlist ${wishlist.includes(product.id) ? 'active' : ''}" 
                                         onclick="toggleWishlist('${product.id}')">
@@ -814,7 +865,8 @@
 
             localStorage.setItem('digineer-cart', JSON.stringify(cart));
             updateCartUI();
-            showNotification(`"${product.name}" ditambahkan ke keranjang!`, 'success');
+            showNotification(`"${product.name}" ditambahkan ke keranjang! 🛒`, 'success');
+            createConfetti();
         }
 
         function updateCartUI() {
@@ -837,7 +889,7 @@
                     <img src="${item.image}" alt="${item.name}" class="cart-item-image">
                     <div class="cart-item-details">
                         <div class="cart-item-name">${item.name}</div>
-                        <div class="cart-item-price">Rp ${item.price.toLocaleString()} x ${item.quantity}</div>
+                        <div class="cart-item-price">Rp ${item.price.toLocaleString('id-ID')} x ${item.quantity}</div>
                         <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
                             <button onclick="updateQuantity('${item.id}', ${item.quantity - 1})" 
                                     ${item.quantity <= 1 ? 'disabled' : ''}
@@ -856,7 +908,7 @@
 
             // Update total
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            cartTotal.textContent = `Rp ${total.toLocaleString()}`;
+            cartTotal.textContent = `Rp ${total.toLocaleString('id-ID')}`;
         }
 
         function updateQuantity(productId, newQuantity) {
@@ -892,13 +944,22 @@
             }
 
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-            const productNames = cart.map(item => `${item.name} (${item.quantity}x)`).join(', ');
+            const productNames = cart.map(item => `• ${item.name} (${item.quantity}x) - Rp ${(item.price * item.quantity).toLocaleString('id-ID')}`).join('%0A');
             
-            const message = `Halo Digineer Store! Saya mau pesan:\n\n${productNames}\n\nTotal: Rp ${total.toLocaleString()}\n\nBisa info lebih lanjut?`;
-            const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(message)}`;
+            const message = `Halo Digineer Store! 👋%0A%0ASaya mau pesan layanan berikut:%0A%0A${productNames}%0A%0A💰 *Total: Rp ${total.toLocaleString('id-ID')}*%0A%0ABisa info lebih lanjut mengenai proses order dan pembayaran?`;
+            const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
             
             window.open(whatsappUrl, '_blank');
-            showNotification('Redirect ke WhatsApp...', 'success');
+            showNotification('Mengarahkan ke WhatsApp... 📱', 'success');
+            createConfetti();
+            
+            // Clear cart after successful checkout
+            setTimeout(() => {
+                cart = [];
+                localStorage.setItem('digineer-cart', JSON.stringify(cart));
+                updateCartUI();
+                toggleCart();
+            }, 2000);
         }
 
         // ====== WISHLIST ======
@@ -910,11 +971,16 @@
                 showNotification('Dihapus dari wishlist', 'success');
             } else {
                 wishlist.push(productId);
-                showNotification('Ditambahkan ke wishlist!', 'success');
+                showNotification('Ditambahkan ke wishlist! ❤️', 'success');
             }
             
             localStorage.setItem('digineer-wishlist', JSON.stringify(wishlist));
+            updateWishlistUI();
             displayProducts();
+        }
+
+        function updateWishlistUI() {
+            document.getElementById('wishlistBadge').textContent = wishlist.length;
         }
 
         // ====== NOTIFICATION ======
@@ -943,6 +1009,43 @@
                 notification.classList.remove('show');
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
+        }
+
+        // ====== CONFETTI EFFECT ======
+        function createConfetti() {
+            const colors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
+            
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.position = 'fixed';
+                confetti.style.width = '10px';
+                confetti.style.height = '10px';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.borderRadius = '50%';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.top = '-10px';
+                confetti.style.animation = `confettiFall ${Math.random() * 2 + 1}s ease-out forwards`;
+                confetti.style.zIndex = '10000';
+                confetti.style.pointerEvents = 'none';
+                
+                // Add animation
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes confettiFall {
+                        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+                        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                document.body.appendChild(confetti);
+                
+                // Remove after animation
+                setTimeout(() => {
+                    confetti.remove();
+                    style.remove();
+                }, 3000);
+            }
         }
 
         // ====== UTILITY FUNCTIONS ======
