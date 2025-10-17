@@ -1,42 +1,24 @@
-// ===== Simple Front-End Auth (for static hosting) =====
-const AUTH_KEY = 'digineer-auth';
+// js/auth.js
+// Sederhana untuk hosting static: simpan status di sessionStorage.
+// Ganti kredensial sesuai kebutuhan (JANGAN gunakan di produksi nyata).
+const Auth = (() => {
+  const ADMIN = { email: 'admin@digineer.id', password: 'digineer123' };
+  const KEY = 'digineer:isAdmin';
 
-// GANTI kredensial ini sesuai kebutuhanmu (jangan commit ke publik kalau bisa)
-const AUTH_USERS = [
-  { username: 'admin', password: 'digineer123' }
-];
-
-// Buat token dengan expiry (default 12 jam)
-function setAuth(username, hours=12){
-  const exp = Date.now() + hours*60*60*1000;
-  localStorage.setItem(AUTH_KEY, JSON.stringify({ username, exp }));
-}
-
-function getAuth(){
-  try {
-    const obj = JSON.parse(localStorage.getItem(AUTH_KEY));
-    if(!obj) return null;
-    if(Date.now() > (obj.exp||0)) { localStorage.removeItem(AUTH_KEY); return null; }
-    return obj;
-  } catch(e){ return null; }
-}
-
-function isAuthed(){ return !!getAuth(); }
-
-function requireAuth(redirect='login.html'){
-  if(!isAuthed()){ window.location.href = redirect + '?next=' + encodeURIComponent(location.pathname); }
-}
-
-function logout(redirect='login.html'){
-  localStorage.removeItem(AUTH_KEY);
-  window.location.href = redirect;
-}
-
-// Validasi kredensial
-function tryLogin(username, password){
-  const ok = AUTH_USERS.some(u => u.username===username && u.password===password);
-  if(ok){ setAuth(username); }
-  return ok;
-}
-
-window.DAuth = { isAuthed, requireAuth, logout, tryLogin, getAuth };
+  function login(email, password){
+    const ok = (String(email||'').trim() === ADMIN.email) && (String(password||'') === ADMIN.password);
+    if(ok) sessionStorage.setItem(KEY, '1');
+    return ok;
+  }
+  function require(){
+    if(sessionStorage.getItem(KEY) !== '1'){
+      alert('Anda harus login sebagai admin.');
+      location.href = 'login.html';
+    }
+  }
+  function logout(){
+    sessionStorage.removeItem(KEY);
+    location.href = 'login.html';
+  }
+  return { login, require, logout };
+})();
