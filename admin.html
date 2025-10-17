@@ -1,96 +1,90 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Admin – Kelola Produk</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-<style>
-  body{font-family:Inter,system-ui;max-width:1000px;margin:0 auto;padding:24px;background:#f7faf9;color:#0b1220}
-  h1{margin-bottom:16px}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid #e5e9ec}
-  th,td{padding:12px;border-bottom:1px solid #e5e9ec;text-align:left}
-  input,select,textarea{width:100%;padding:10px;border:1px solid #e5e9ec}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  button{padding:10px 14px;border:none;background:#10bfa4;color:#053b34;font-weight:700;cursor:pointer}
-  .danger{background:#ef4444;color:#fff}
-  .muted{background:#e5e9ec;color:#0b1220}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>Admin Panel - Digineer</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+  <style>
+    :root{--border:#e5e9ec;--surface:#fff;--bg:#f7faf9;--primary:#10bfa4;--ink:#0b1220}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--ink)}
+    header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+    button, input, select, textarea{font-family:inherit}
+    button{border:1px solid #8bf0e1;background:#10bfa4;color:#053b34;font-weight:800;border-radius:10px;padding:10px 14px;cursor:pointer}
+    .secondary{background:#fff;border:1px solid var(--border);color:#0b1220}
+    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    th,td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top}
+    th{background:#f2fbfa;text-align:left}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+    .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
+    input, textarea, select{width:100%;padding:10px;border:1px solid var(--border);border-radius:10px}
+    .muted{color:#64748b}
+    @media (max-width:800px){ .grid{grid-template-columns:1fr} }
+  </style>
 </head>
 <body>
-  <h1>Admin – Kelola Produk</h1>
+  <header>
+    <strong>Admin Digineer</strong>
+    <div>
+      <button class="secondary" onclick="location.href='index.html'"><i class="fa-solid fa-arrow-left"></i> Lihat Situs</button>
+      <button id="btnLogout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+    </div>
+  </header>
 
-  <form id="form">
-    <input type="hidden" id="id">
-    <div class="row">
-      <div><label>Nama</label><input id="name" required></div>
-      <div><label>Kategori</label>
-        <select id="category">
+  <div class="wrap">
+    <div class="tools">
+      <button id="btnImport"><i class="fa-solid fa-file-arrow-up"></i> Import products.json</button>
+      <button id="btnExport"><i class="fa-solid fa-file-arrow-down"></i> Export products.json</button>
+      <span class="muted">→ Import/Export untuk sinkron dengan <code>/assets/products.json</code> di repo.</span>
+      <input type="file" id="filePicker" accept=".json" hidden>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Tambah / Ubah Produk</h3>
+        <input id="p_id" placeholder="ID unik (mis. p7)">
+        <input id="p_name" placeholder="Nama">
+        <select id="p_cat">
           <option value="design">design</option>
           <option value="development">development</option>
           <option value="video">video</option>
         </select>
+        <input id="p_price" type="number" min="0" step="1000" placeholder="Harga (Rp)">
+        <input id="p_image" placeholder="URL gambar">
+        <textarea id="p_desc" rows="3" placeholder="Deskripsi"></textarea>
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button onclick="Admin.save()"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+          <button class="secondary" onclick="Admin.resetForm()"><i class="fa-solid fa-broom"></i> Reset</button>
+        </div>
+        <div class="muted" style="margin-top:8px">Data disimpan di <strong>localStorage</strong> sementara. Gunakan Export untuk menghasilkan <code>products.json</code> yang kemudian kamu upload ke <code>/assets/</code>.</div>
+      </div>
+
+      <div class="card">
+        <h3>Data Aktif</h3>
+        <div class="muted">Sumber awal diambil dari <code>/assets/products.json</code> bila ada; jika tidak, pakai fallback. Saat kamu import, data di bawah ini ikut terganti.</div>
+        <div id="stat" class="muted" style="margin-top:6px"></div>
       </div>
     </div>
-    <div class="row">
-      <div><label>Harga (IDR)</label><input id="price" type="number" min="0" required></div>
-      <div><label>Gambar (URL)</label><input id="image" required></div>
-    </div>
-    <div><label>Deskripsi</label><textarea id="description" rows="3" required></textarea></div>
-    <div style="display:flex;gap:8px;margin-top:8px">
-      <button type="submit">Simpan</button>
-      <button type="button" class="muted" onclick="resetForm()">Reset</button>
-    </div>
-  </form>
 
-  <h2 style="margin-top:24px">Daftar Produk</h2>
-  <table id="table">
-    <thead><tr><th>Nama</th><th>Kategori</th><th>Harga</th><th>Aksi</th></tr></thead>
-    <tbody></tbody>
-  </table>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:110px">Gambar</th>
+          <th>Nama</th>
+          <th>Kategori</th>
+          <th>Harga</th>
+          <th>Deskripsi</th>
+          <th style="width:120px">Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
 
-<script>
-async function fetchProducts(){ const r = await fetch('/api/products',{cache:'no-store'}); return r.json(); }
-async function createProduct(p){ const r = await fetch('/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)}); return r.json(); }
-async function updateProduct(id,p){ const r = await fetch('/api/products/'+id,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(p)}); return r.json(); }
-async function deleteProduct(id){ await fetch('/api/products/'+id,{method:'DELETE'}); }
-
-function rowHTML(p){
-  const f = new Intl.NumberFormat('id-ID');
-  return `<tr>
-    <td>${p.name}</td>
-    <td>${p.category}</td>
-    <td>Rp ${f.format(p.price)}</td>
-    <td>
-      <button onclick='edit(${JSON.stringify(p)})'>Edit</button>
-      <button class="danger" onclick='removeP("${p.id}")'>Hapus</button>
-    </td>
-  </tr>`;
-}
-async function render(){
-  const items = await fetchProducts();
-  document.querySelector('#table tbody').innerHTML = items.map(rowHTML).join('');
-}
-function resetForm(){ document.getElementById('form').reset(); document.getElementById('id').value=''; }
-function edit(p){ for(const k of ['id','name','category','price','image','description']) document.getElementById(k).value=p[k]; window.scrollTo({top:0,behavior:'smooth'}); }
-async function removeP(id){ if(!confirm('Hapus produk?')) return; await deleteProduct(id); await render(); }
-
-document.getElementById('form').addEventListener('submit', async (e)=>{
-  e.preventDefault();
-  const p = {
-    id: document.getElementById('id').value || undefined,
-    name: document.getElementById('name').value.trim(),
-    category: document.getElementById('category').value,
-    price: +document.getElementById('price').value,
-    image: document.getElementById('image').value.trim(),
-    description: document.getElementById('description').value.trim()
-  };
-  if(p.id) await updateProduct(p.id, p); else await createProduct(p);
-  resetForm(); await render();
-});
-
-render();
-</script>
+  <script src="js/auth.js"></script>
+  <script src="js/admin.js"></script>
 </body>
 </html>
