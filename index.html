@@ -27,9 +27,9 @@
     <!-- Preload Critical Resources -->
     <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" as="style">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
-    <!-- Preload Logo (untuk LCP) -->
-    <link rel="preload" as="image" href="https://instagram.fbdo9-1.fna.fbcdn.net/v/t51.2885-19/552953059_17842410567588397_1451783475643772744_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MTEuYzIifQ&_nc_ht=instagram.fbdo9-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QEqQRttX-Vf8dMpKH4dFtmtg_NyrDBgV8luhbNPoOSRrYDFM4jH10JPDlAF1KhM62Ziaj4snUKeKu24msU2FdkS&_nc_ohc=EoEsXZwNtQcQ7kNvwGKXqRX&_nc_gid=wRfqJifRGWx6X6jw8JzWvw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afd8sMi79aB4Gk2OZzk7qCrP2qGcc6ZdwutTnnhOJVL8qg&oe=68F789F3&_nc_sid=8b3546">
-    
+    <!-- Preload Logo (LCP) -->
+    <link rel="preload" as="image" href="assets/logo.png">
+
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <!-- Font Awesome -->
@@ -57,12 +57,7 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background: var(--light);
-        }
+        body { font-family: 'Inter', sans-serif; line-height: 1.6; color: var(--dark); background: var(--light); }
 
         /* === GLASS MORPHISM === */
         .glass { background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.18); }
@@ -79,16 +74,14 @@
             z-index: 1000; padding: 1rem 0; box-shadow: var(--shadow);
         }
 
-        /* Header pakai grid agar simetris: kiri=logo, tengah=nav, kanan=aksi */
+        /* Header grid: kiri=logo, tengah=nav, kanan=aksi */
         .nav-container {
             max-width: 1200px; margin: 0 auto; padding: 0 2rem;
             display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 1rem;
         }
 
         .logo { display:inline-flex; align-items:center; text-decoration:none; }
-        .logo img {
-            height: 32px; width: auto; display: block; vertical-align: middle;
-        }
+        .logo img { height: 32px; width: auto; display: block; vertical-align: middle; }
 
         .nav-links { display: flex; gap: 2rem; justify-self: center; }
         .nav-link { color: var(--dark); text-decoration: none; font-weight: 500; transition: var(--transition); }
@@ -164,9 +157,7 @@
             box-shadow: var(--shadow); transition: var(--transition);
         }
         .product-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lg); }
-        .product-image {
-            width: 100%; height: 200px; object-fit: cover; aspect-ratio: 3 / 2; /* performa */
-        }
+        .product-image { width: 100%; height: 200px; object-fit: cover; aspect-ratio: 3 / 2; }
         .product-content { padding: 1.5rem; }
         .product-category { color: var(--primary); font-size: 0.9rem; font-weight: 600; text-transform: uppercase; margin-bottom: 0.5rem; }
         .product-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; }
@@ -234,17 +225,17 @@
 
         /* === RESPONSIVE === */
         @media (max-width: 768px) {
-            .nav-links { display: none; }         /* nav link disembunyikan di mobile */
-            .logo img { height: 28px; }           /* logo sedikit lebih kecil di HP */
+            .nav-links { display: none; }
+            .logo img { height: 28px; }  /* logo sedikit lebih kecil di HP */
             .hero-title { font-size: 2.5rem; }
             .products-header { flex-direction: column; align-items: stretch; }
             .search-box { min-width: auto; }
             .products-grid { grid-template-columns: 1fr; }
             .cart-sidebar { max-width: 100%; }
         }
-        /* Jika ingin logo center di mobile, aktifkan blok ini
+        /* Ingin logo center di mobile? aktifkan blok ini:
         @media (max-width: 768px) {
-            .nav-container { grid-template-columns: 1fr auto 1fr; }  // spacer | logo | actions
+            .nav-container { grid-template-columns: 1fr auto 1fr; }
             .logo { justify-self: center; }
         } */
     </style>
@@ -253,14 +244,13 @@
     <!-- Header -->
     <header class="header">
         <div class="nav-container">
-            <!-- LOGO: gambar dengan preload & fallback -->
+            <!-- LOGO: pakai file lokal + fallback -->
             <a href="#home" class="logo" aria-label="Digineer Store">
                 <img
-                    src="https://instagram.fbdo9-1.fna.fbcdn.net/v/t51.2885-19/552953059_17842410567588397_1451783475643772744_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby44MTEuYzIifQ&_nc_ht=instagram.fbdo9-1.fna.fbcdn.net&_nc_cat=101&_nc_oc=Q6cZ2QEqQRttX-Vf8dMpKH4dFtmtg_NyrDBgV8luhbNPoOSRrYDFM4jH10JPDlAF1KhM62Ziaj4snUKeKu24msU2FdkS&_nc_ohc=EoEsXZwNtQcQ7kNvwGKXqRX&_nc_gid=wRfqJifRGWx6X6jw8JzWvw&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Afd8sMi79aB4Gk2OZzk7qCrP2qGcc6ZdwutTnnhOJVL8qg&oe=68F789F3&_nc_sid=8b3546"
+                    src="assets/logo.png"
                     alt="Digineer Store"
                     width="144" height="32"
                     decoding="async" fetchpriority="high"
-                    referrerpolicy="no-referrer"
                     onerror="this.onerror=null;this.src='https://via.placeholder.com/144x32?text=Digineer';"
                 />
             </a>
@@ -344,9 +334,7 @@
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
-        <div class="cart-items" id="cartItems">
-            <!-- Cart items will be loaded here -->
-        </div>
+        <div class="cart-items" id="cartItems"></div>
         <div class="cart-footer">
             <div class="cart-total">
                 <span>Total:</span>
@@ -383,7 +371,7 @@
         const IDR = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 });
 
         // ====== WHATSAPP NUMBER ======
-        const WHATSAPP_NUMBER = '089507083879'; // sesuai permintaan
+        const WHATSAPP_NUMBER = '089507083879';
 
         // ====== UTIL ======
         function debounce(fn, delay=300){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), delay); }; }
@@ -403,7 +391,6 @@
             const input = document.querySelector('.search-input');
             if (input) input.value = currentSearch;
 
-            // set tab aktif
             document.querySelectorAll('.filter-tab').forEach(t => { t.classList.remove('active'); t.setAttribute('aria-selected','false'); });
             const map = { all:0, design:1, development:2, video:3 };
             const idx = map[currentFilter] ?? 0;
@@ -417,11 +404,7 @@
             displayProducts();
             updateCartUI();
             updateWishlistUI();
-            
-            // Welcome notification
-            setTimeout(() => {
-                showNotification('Selamat datang di Digineer Store! 🚀', 'success');
-            }, 1000);
+            setTimeout(() => { showNotification('Selamat datang di Digineer Store! 🚀', 'success'); }, 1000);
         }
 
         // ====== SKELETON LOADING ======
@@ -443,12 +426,10 @@
             const container = document.getElementById('productsContainer');
             let filteredProducts = products;
 
-            // Apply filter
             if (currentFilter !== 'all') {
                 filteredProducts = filteredProducts.filter(product => product.category === currentFilter);
             }
 
-            // Apply search (sanitize)
             if (currentSearch) {
                 const q = currentSearch.toLowerCase();
                 filteredProducts = filteredProducts.filter(product => 
@@ -457,7 +438,6 @@
                 );
             }
 
-            // Jika kosong
             if (filteredProducts.length === 0) {
                 container.innerHTML = `
                     <div style="text-align:center;color:var(--gray)">
@@ -468,7 +448,6 @@
                 return;
             }
 
-            // Generate HTML
             container.innerHTML = filteredProducts.map(product => `
                 <div class="product-card">
                     <img loading="lazy" decoding="async"
@@ -498,10 +477,7 @@
             container.removeAttribute('aria-busy');
         };
 
-        function displayProducts(){
-            _renderProducts();
-            syncStateToURL();
-        }
+        function displayProducts(){ _renderProducts(); syncStateToURL(); }
 
         function getCategoryName(category) {
             const categories = { 'design':'Desain', 'development':'Development', 'video':'Video Production' };
@@ -512,8 +488,7 @@
         function filterProducts(category, el) {
             currentFilter = category;
             document.querySelectorAll('.filter-tab').forEach(tab => {
-                tab.classList.remove('active');
-                tab.setAttribute('aria-selected','false');
+                tab.classList.remove('active'); tab.setAttribute('aria-selected','false');
             });
             if (el) { el.classList.add('active'); el.setAttribute('aria-selected','true'); }
             displayProducts();
@@ -542,7 +517,6 @@
             sidebar.classList.toggle('active');
             overlay.classList.toggle('active');
 
-            // Lock scroll saat cart terbuka
             document.body.style.overflow = willActive ? 'hidden' : '';
 
             if (willActive) {
@@ -577,11 +551,8 @@
             const product = products.find(p => p.id === productId);
             const existingItem = cart.find(item => item.id === productId);
 
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ ...product, quantity: 1 });
-            }
+            if (existingItem) { existingItem.quantity += 1; }
+            else { cart.push({ ...product, quantity: 1 }); }
 
             localStorage.setItem('digineer-cart', JSON.stringify(cart));
             updateCartUI();
@@ -590,11 +561,9 @@
         }
 
         function updateCartUI() {
-            // Update badge
             const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
             document.getElementById('cartBadge').textContent = totalItems;
 
-            // Update cart items
             const cartItems = document.getElementById('cartItems');
             const cartTotal = document.getElementById('cartTotal');
             
@@ -633,16 +602,12 @@
                 </div>
             `).join('');
 
-            // Update total
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             cartTotal.textContent = IDR.format(total);
         }
 
         function updateQuantity(productId, newQuantity) {
-            if (newQuantity < 1) {
-                removeFromCart(productId);
-                return;
-            }
+            if (newQuantity < 1) { removeFromCart(productId); return; }
             const item = cart.find(item => item.id === productId);
             if (item) {
                 item.quantity = newQuantity;
@@ -659,14 +624,10 @@
         }
 
         function checkout() {
-            if (cart.length === 0) {
-                showNotification('Keranjang masih kosong!', 'error');
-                return;
-            }
+            if (cart.length === 0) { showNotification('Keranjang masih kosong!', 'error'); return; }
 
             const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
             const productNames = cart.map(item => `• ${item.name} (${item.quantity}x) - ${IDR.format(item.price * item.quantity)}`).join('%0A');
-            
             const message = `Halo Digineer Store! 👋%0A%0ASaya mau pesan layanan berikut:%0A%0A${productNames}%0A%0A💰 *Total: ${IDR.format(total)}*%0A%0ABisa info lebih lanjut mengenai proses order dan pembayaran?`;
             const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
             
@@ -674,7 +635,6 @@
             showNotification('Mengarahkan ke WhatsApp... 📱', 'success');
             createConfetti();
             
-            // Clear cart setelah "checkout"
             setTimeout(() => {
                 cart = [];
                 localStorage.setItem('digineer-cart', JSON.stringify(cart));
@@ -686,99 +646,50 @@
         // ====== WISHLIST ======
         function toggleWishlist(productId) {
             const index = wishlist.indexOf(productId);
-            if (index > -1) {
-                wishlist.splice(index, 1);
-                showNotification('Dihapus dari wishlist', 'success');
-            } else {
-                wishlist.push(productId);
-                showNotification('Ditambahkan ke wishlist! ❤️', 'success');
-            }
+            if (index > -1) { wishlist.splice(index, 1); showNotification('Dihapus dari wishlist', 'success'); }
+            else { wishlist.push(productId); showNotification('Ditambahkan ke wishlist! ❤️', 'success'); }
             localStorage.setItem('digineer-wishlist', JSON.stringify(wishlist));
             updateWishlistUI();
             displayProducts();
         }
 
-        function updateWishlistUI() {
-            document.getElementById('wishlistBadge').textContent = wishlist.length;
-        }
+        function updateWishlistUI() { document.getElementById('wishlistBadge').textContent = wishlist.length; }
 
-        // ====== NOTIFICATION (ramah pembaca layar) ======
+        // ====== NOTIFICATION ======
         function showNotification(message, type = 'success') {
-            // Live region untuk screen reader
-            const lr = document.getElementById('liveRegion');
-            if (lr) lr.textContent = message;
-
-            // Remove existing
-            const existingNotification = document.querySelector('.notification');
-            if (existingNotification) existingNotification.remove();
-
-            // Create
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.setAttribute('role','status');
-            notification.setAttribute('aria-live','polite');
-            notification.innerHTML = `
-                <i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle" aria-hidden="true"></i>
-                <span>${message}</span>
-            `;
-            document.body.appendChild(notification);
-
-            // Show
-            setTimeout(() => notification.classList.add('show'), 100);
-
-            // Hide after 3s
-            setTimeout(() => {
-                notification.classList.remove('show');
-                setTimeout(() => notification.remove(), 300);
-            }, 3000);
+            const lr = document.getElementById('liveRegion'); if (lr) lr.textContent = message;
+            const existing = document.querySelector('.notification'); if (existing) existing.remove();
+            const n = document.createElement('div');
+            n.className = `notification ${type}`; n.setAttribute('role','status'); n.setAttribute('aria-live','polite');
+            n.innerHTML = `<i class="fas fa-${type === 'success' ? 'check' : 'exclamation'}-circle" aria-hidden="true"></i><span>${message}</span>`;
+            document.body.appendChild(n);
+            setTimeout(() => n.classList.add('show'), 100);
+            setTimeout(() => { n.classList.remove('show'); setTimeout(() => n.remove(), 300); }, 3000);
         }
 
         // ====== CONFETTI EFFECT ======
         function createConfetti() {
             const colors = ['#6366f1', '#8b5cf6', '#ec4899', '#f59e0b', '#10b981'];
             for (let i = 0; i < 20; i++) {
-                const confetti = document.createElement('div');
-                confetti.style.position = 'fixed';
-                confetti.style.width = '10px';
-                confetti.style.height = '10px';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.borderRadius = '50%';
-                confetti.style.left = Math.random() * 100 + 'vw';
-                confetti.style.top = '-10px';
-                confetti.style.animation = `confettiFall ${Math.random() * 2 + 1}s ease-out forwards`;
-                confetti.style.zIndex = '10000';
-                confetti.style.pointerEvents = 'none';
-                
-                // Add animation
+                const c = document.createElement('div');
+                c.style.position = 'fixed'; c.style.width = '10px'; c.style.height = '10px';
+                c.style.background = colors[Math.floor(Math.random() * colors.length)];
+                c.style.borderRadius = '50%'; c.style.left = Math.random() * 100 + 'vw'; c.style.top = '-10px';
+                c.style.animation = `confettiFall ${Math.random() * 2 + 1}s ease-out forwards`;
+                c.style.zIndex = '10000'; c.style.pointerEvents = 'none';
                 const style = document.createElement('style');
-                style.textContent = `
-                    @keyframes confettiFall {
-                        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-                        100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-                    }
-                `;
+                style.textContent = `@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(360deg);opacity:0;}}`;
                 document.head.appendChild(style);
-                
-                document.body.appendChild(confetti);
-                
-                // Remove after animation
-                setTimeout(() => {
-                    confetti.remove();
-                    style.remove();
-                }, 3000);
+                document.body.appendChild(c);
+                setTimeout(() => { c.remove(); style.remove(); }, 3000);
             }
         }
 
-        // ====== UTILITY FUNCTIONS ======
-        function scrollToProducts() {
-            document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
-        }
+        // ====== UTILS ======
+        function scrollToProducts() { document.getElementById('products').scrollIntoView({ behavior: 'smooth' }); }
 
-        // ====== INITIALIZE ON LOAD ======
-        document.addEventListener('DOMContentLoaded', () => {
-            showSkeletonCards(); // tampilkan skeleton dulu
-            initialize();        // lalu render data
-        });
+        // ====== INIT ======
+        document.addEventListener('DOMContentLoaded', () => { showSkeletonCards(); initialize(); });
     </script>
 </body>
 </html>
