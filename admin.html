@@ -7,22 +7,31 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
   <style>
-    :root{--border:#e5e9ec;--surface:#fff;--bg:#f7faf9;--primary:#10bfa4;--ink:#0b1220}
+    :root{--border:#e5e9ec;--surface:#fff;--bg:#f7faf9;--primary:#10bfa4;--ink:#0b1220;--error:#ef4444;--success:#0fb985}
     *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:var(--bg);color:var(--ink)}
-    header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center}
+    header{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--border);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;z-index:100}
     .wrap{max-width:1100px;margin:0 auto;padding:16px}
     .tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
     button, input, select, textarea{font-family:inherit}
-    button{border:1px solid #8bf0e1;background:#10bfa4;color:#053b34;font-weight:800;border-radius:10px;padding:10px 14px;cursor:pointer}
+    button{border:1px solid #8bf0e1;background:#10bfa4;color:#053b34;font-weight:800;border-radius:10px;padding:10px 14px;cursor:pointer;transition:all 0.2s ease}
+    button:hover{transform:translateY(-1px);box-shadow:0 2px 8px rgba(16,191,164,0.3)}
     .secondary{background:#fff;border:1px solid var(--border);color:#0b1220}
-    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
-    th,td{padding:10px;border-bottom:1px solid var(--border);vertical-align:top}
-    th{background:#f2fbfa;text-align:left}
+    .danger{background:#fee2e2;border:1px solid #fecaca;color:#dc2626}
+    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-top:16px}
+    th,td{padding:12px;border-bottom:1px solid var(--border);vertical-align:top}
+    th{background:#f2fbfa;text-align:left;font-weight:600}
     .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
     .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:16px}
-    input, textarea, select{width:100%;padding:10px;border:1px solid var(--border);border-radius:10px}
+    input, textarea, select{width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px}
     .muted{color:#64748b}
-    @media (max-width:800px){ .grid{grid-template-columns:1fr} }
+    .product-img{width:80px;height:60px;object-fit:cover;border-radius:6px}
+    .notification{position:fixed;top:20px;right:20px;padding:12px 16px;border-radius:8px;color:white;z-index:1000;transform:translateX(400px);transition:transform 0.3s ease}
+    .notification.show{transform:translateX(0)}
+    .notification.success{background:var(--success)}
+    .notification.error{background:var(--error)}
+    .actions{display:flex;gap:4px}
+    .btn-small{padding:6px 10px;font-size:12px}
+    @media (max-width:800px){ .grid{grid-template-columns:1fr} .actions{flex-direction:column} }
   </style>
 </head>
 <body>
@@ -30,7 +39,7 @@
     <strong>Admin Digineer</strong>
     <div>
       <button class="secondary" onclick="location.href='index.html'"><i class="fa-solid fa-arrow-left"></i> Lihat Situs</button>
-      <button id="btnLogout"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+      <button id="btnLogout" class="danger"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
     </div>
   </header>
 
@@ -38,19 +47,22 @@
     <div class="tools">
       <button id="btnImport"><i class="fa-solid fa-file-arrow-up"></i> Import products.json</button>
       <button id="btnExport"><i class="fa-solid fa-file-arrow-down"></i> Export products.json</button>
+      <button id="btnAddNew" class="secondary"><i class="fa-solid fa-plus"></i> Tambah Baru</button>
       <span class="muted">→ Import/Export untuk sinkron dengan <code>/assets/products.json</code> di repo.</span>
       <input type="file" id="filePicker" accept=".json" hidden>
     </div>
 
     <div class="grid">
       <div class="card">
-        <h3>Tambah / Ubah Produk</h3>
+        <h3><i class="fa-solid fa-pen"></i> Tambah / Ubah Produk</h3>
         <input id="p_id" placeholder="ID unik (mis. p7)">
         <input id="p_name" placeholder="Nama">
         <select id="p_cat">
-          <option value="design">design</option>
-          <option value="development">development</option>
-          <option value="video">video</option>
+          <option value="">Pilih Kategori</option>
+          <option value="design">Desain</option>
+          <option value="development">Development</option>
+          <option value="video">Video</option>
+          <option value="print">Cetak</option>
         </select>
         <input id="p_price" type="number" min="0" step="1000" placeholder="Harga (Rp)">
         <input id="p_image" placeholder="URL gambar">
@@ -63,9 +75,14 @@
       </div>
 
       <div class="card">
-        <h3>Data Aktif</h3>
+        <h3><i class="fa-solid fa-database"></i> Data Aktif</h3>
         <div class="muted">Sumber awal diambil dari <code>/assets/products.json</code> bila ada; jika tidak, pakai fallback. Saat kamu import, data di bawah ini ikut terganti.</div>
         <div id="stat" class="muted" style="margin-top:6px"></div>
+        <div style="margin-top:12px">
+          <strong>Status:</strong> <span id="dataStatus">Memuat...</span><br>
+          <strong>Total Produk:</strong> <span id="totalProducts">0</span> item<br>
+          <strong>Sumber:</strong> <span id="dataSource">-</span>
+        </div>
       </div>
     </div>
 
@@ -84,7 +101,316 @@
     </table>
   </div>
 
-  <script src="js/auth.js"></script>
-  <script src="js/admin.js"></script>
+  <!-- Notification -->
+  <div class="notification" id="notification"></div>
+
+  <script>
+    // Admin Management System
+    const Admin = {
+      products: [],
+      editingId: null,
+      
+      init() {
+        this.loadProducts();
+        this.setupEventListeners();
+        this.updateStats();
+      },
+      
+      loadProducts() {
+        // Try to load from localStorage first (admin edited data)
+        const savedProducts = localStorage.getItem('digineer-admin-products');
+        
+        if (savedProducts) {
+          this.products = JSON.parse(savedProducts);
+          this.updateUI();
+          this.showNotification('Data dimuat dari localStorage', 'success');
+          return;
+        }
+        
+        // Try to load from products.json
+        fetch('assets/products.json')
+          .then(response => {
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('products.json not found');
+          })
+          .then(data => {
+            this.products = Array.isArray(data) ? data : this.getFallbackProducts();
+            this.saveToLocalStorage();
+            this.updateUI();
+            this.showNotification('Data dimuat dari products.json', 'success');
+          })
+          .catch(error => {
+            console.log('Using fallback products:', error);
+            this.products = this.getFallbackProducts();
+            this.saveToLocalStorage();
+            this.updateUI();
+            this.showNotification('Menggunakan data fallback', 'success');
+          });
+      },
+      
+      getFallbackProducts() {
+        return [
+          { 
+            id: 'p1', 
+            name: 'Paket Branding Professional', 
+            category: 'design', 
+            price: 2500000, 
+            image: 'https://images.unsplash.com/photo-1565688534245-05d6b5be184a?auto=format&fit=crop&w=800&q=80', 
+            description: 'Logo, brand guide, stationery design, dan social media kit lengkap' 
+          },
+          { 
+            id: 'p2', 
+            name: 'Website Company Profile', 
+            category: 'development', 
+            price: 3500000, 
+            image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80', 
+            description: 'Website perusahaan modern dengan CMS custom dan responsive design' 
+          },
+          { 
+            id: 'p3', 
+            name: 'Video Company Profile', 
+            category: 'video', 
+            price: 5000000, 
+            image: 'https://images.unsplash.com/photo-1554260570-9140fd3b7614?auto=format&fit=crop&w=800&q=80', 
+            description: 'Video profil perusahaan profesional dengan animasi dan editing' 
+          },
+          { 
+            id: 'p101', 
+            name: 'Cetak Spanduk', 
+            category: 'print', 
+            price: 250000, 
+            image: 'https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=800&q=80', 
+            description: 'Cetak spanduk berkualitas tinggi berbagai ukuran' 
+          }
+        ];
+      },
+      
+      setupEventListeners() {
+        // Import/Export buttons
+        document.getElementById('btnImport').addEventListener('click', () => {
+          document.getElementById('filePicker').click();
+        });
+        
+        document.getElementById('btnExport').addEventListener('click', () => {
+          this.exportProducts();
+        });
+        
+        document.getElementById('btnAddNew').addEventListener('click', () => {
+          this.resetForm();
+        });
+        
+        document.getElementById('filePicker').addEventListener('change', (e) => {
+          this.importProducts(e);
+        });
+        
+        // Logout button
+        document.getElementById('btnLogout').addEventListener('click', () => {
+          if (confirm('Yakin ingin logout?')) {
+            window.location.href = 'login.html';
+          }
+        });
+      },
+      
+      save() {
+        const formData = {
+          id: document.getElementById('p_id').value.trim(),
+          name: document.getElementById('p_name').value.trim(),
+          category: document.getElementById('p_cat').value,
+          price: parseInt(document.getElementById('p_price').value),
+          image: document.getElementById('p_image').value.trim(),
+          description: document.getElementById('p_desc').value.trim()
+        };
+        
+        // Validation
+        if (!formData.id || !formData.name || !formData.category || !formData.price || !formData.image || !formData.description) {
+          this.showNotification('Harap isi semua field!', 'error');
+          return;
+        }
+        
+        if (this.editingId) {
+          // Update existing product
+          const index = this.products.findIndex(p => p.id === this.editingId);
+          if (index !== -1) {
+            this.products[index] = formData;
+            this.showNotification('Produk berhasil diperbarui!', 'success');
+          }
+        } else {
+          // Check if ID already exists
+          if (this.products.find(p => p.id === formData.id)) {
+            this.showNotification('ID produk sudah ada!', 'error');
+            return;
+          }
+          // Add new product
+          this.products.push(formData);
+          this.showNotification('Produk berhasil ditambahkan!', 'success');
+        }
+        
+        this.saveToLocalStorage();
+        this.updateUI();
+        this.resetForm();
+      },
+      
+      edit(id) {
+        const product = this.products.find(p => p.id === id);
+        if (product) {
+          this.editingId = id;
+          document.getElementById('p_id').value = product.id;
+          document.getElementById('p_name').value = product.name;
+          document.getElementById('p_cat').value = product.category;
+          document.getElementById('p_price').value = product.price;
+          document.getElementById('p_image').value = product.image;
+          document.getElementById('p_desc').value = product.description;
+          document.getElementById('p_id').readOnly = true;
+          
+          // Scroll to form
+          document.querySelector('.card h3').scrollIntoView({ behavior: 'smooth' });
+        }
+      },
+      
+      delete(id) {
+        if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
+          this.products = this.products.filter(p => p.id !== id);
+          this.saveToLocalStorage();
+          this.updateUI();
+          this.showNotification('Produk berhasil dihapus!', 'success');
+        }
+      },
+      
+      resetForm() {
+        this.editingId = null;
+        document.getElementById('p_id').value = '';
+        document.getElementById('p_name').value = '';
+        document.getElementById('p_cat').value = '';
+        document.getElementById('p_price').value = '';
+        document.getElementById('p_image').value = '';
+        document.getElementById('p_desc').value = '';
+        document.getElementById('p_id').readOnly = false;
+      },
+      
+      updateUI() {
+        const rows = document.getElementById('rows');
+        rows.innerHTML = '';
+        
+        this.products.forEach(product => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>
+              <img src="${product.image}" alt="${product.name}" class="product-img"
+                   onerror="this.src='https://via.placeholder.com/80x60?text=Image'">
+            </td>
+            <td>
+              <strong>${this.escapeHTML(product.name)}</strong><br>
+              <small class="muted">${product.id}</small>
+            </td>
+            <td>${this.getCategoryName(product.category)}</td>
+            <td>${this.formatPrice(product.price)}</td>
+            <td>${this.escapeHTML(product.description)}</td>
+            <td>
+              <div class="actions">
+                <button class="btn-small secondary" onclick="Admin.edit('${product.id}')">
+                  <i class="fa-solid fa-edit"></i>
+                </button>
+                <button class="btn-small danger" onclick="Admin.delete('${product.id}')">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            </td>
+          `;
+          rows.appendChild(row);
+        });
+        
+        this.updateStats();
+      },
+      
+      updateStats() {
+        document.getElementById('totalProducts').textContent = this.products.length;
+        document.getElementById('dataSource').textContent = localStorage.getItem('digineer-admin-products') ? 'localStorage' : 'products.json';
+        document.getElementById('dataStatus').textContent = 'Aktif';
+      },
+      
+      saveToLocalStorage() {
+        localStorage.setItem('digineer-admin-products', JSON.stringify(this.products));
+      },
+      
+      exportProducts() {
+        const dataStr = JSON.stringify(this.products, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(dataBlob);
+        link.download = 'products.json';
+        link.click();
+        
+        this.showNotification('File products.json berhasil diunduh!', 'success');
+      },
+      
+      importProducts(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+        
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const importedData = JSON.parse(e.target.result);
+            if (Array.isArray(importedData)) {
+              this.products = importedData;
+              this.saveToLocalStorage();
+              this.updateUI();
+              this.showNotification('Produk berhasil diimport!', 'success');
+            } else {
+              this.showNotification('Format file tidak valid!', 'error');
+            }
+          } catch (error) {
+            this.showNotification('Error membaca file: ' + error.message, 'error');
+          }
+        };
+        reader.readAsText(file);
+        
+        // Reset file input
+        event.target.value = '';
+      },
+      
+      showNotification(message, type = 'success') {
+        const notification = document.getElementById('notification');
+        notification.textContent = message;
+        notification.className = `notification ${type}`;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 3000);
+      },
+      
+      getCategoryName(category) {
+        const categories = {
+          'design': 'Desain',
+          'development': 'Development', 
+          'video': 'Video',
+          'print': 'Cetak'
+        };
+        return categories[category] || category;
+      },
+      
+      formatPrice(price) {
+        return new Intl.NumberFormat('id-ID', {
+          style: 'currency',
+          currency: 'IDR',
+          maximumFractionDigits: 0
+        }).format(price);
+      },
+      
+      escapeHTML(str) {
+        return str.replace(/[&<>"']/g, 
+          m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
+      }
+    };
+    
+    // Initialize admin when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      Admin.init();
+    });
+  </script>
 </body>
 </html>
