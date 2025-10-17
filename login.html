@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login Admin – Digineer</title>
+  <link rel="icon" href="assets/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--primary:#6366f1;--border:#e5e7eb;--ink:#0f172a;--muted:#64748b;--radius:12px}
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#f8fafc;color:var(--ink)}
+    .wrap{min-height:100dvh;display:grid;place-items:center;padding:24px}
+    .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:24px;max-width:420px;width:100%;box-shadow:0 6px 20px rgba(2,8,23,.06)}
+    h1{margin:0 0 12px 0;font-size:1.25rem}
+    label{font-weight:700;display:block;margin:.5rem 0 .25rem}
+    input{width:100%;padding:.8rem;border:1px solid var(--border);border-radius:10px;font-size:16px}
+    .row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+    .btn{flex:1;padding:.85rem;border:none;border-radius:10px;font-weight:800;cursor:pointer}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-ghost{background:#fff;border:1px solid var(--border);color:var(--ink)}
+    .muted{color:var(--muted);margin-top:.75rem;font-size:.92rem}
+  </style>
+</head>
+<body>
+  <!-- auth helper -->
+  <script src="js/auth.js"></script>
+
+  <div class="wrap">
+    <form class="card" id="formLogin" autocomplete="on">
+      <h1>Login Admin</h1>
+      <label for="user">Username</label>
+      <input id="user" name="username" required placeholder="admin" autofocus>
+      <label for="pass">Password</label>
+      <input id="pass" name="password" required type="password" placeholder="••••••••">
+      <div class="row">
+        <button class="btn btn-primary" type="submit">Masuk</button>
+        <a class="btn btn-ghost" href="index.html">Kembali</a>
+      </div>
+      <div class="muted">Hanya untuk akun admin yang berwenang.</div>
+    </form>
+  </div>
+
+  <script>
+    // redirect ke admin.html kalau sudah login
+    if (DAuth.isAuthed()) {
+      const next = new URLSearchParams(location.search).get('next') || 'admin.html';
+      location.replace(next);
+    }
+
+    const form = document.getElementById('formLogin');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const u = document.getElementById('user').value.trim();
+      const p = document.getElementById('pass').value;
+      const ok = DAuth.tryLogin(u,p);
+      if(ok){
+        const next = new URLSearchParams(location.search).get('next') || 'admin.html';
+        location.href = next;
+      }else{
+        alert('Username atau password salah.');
+      }
+    });
+  </script>
+</body>
+</html>
