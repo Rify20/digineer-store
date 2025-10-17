@@ -2,7 +2,8 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- penting untuk iPhone notch -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Digineer Store - Solusi Digital Profesional & Jasa Kreatif</title>
   <meta name="description" content="Jasa desain profesional, development website, digital marketing, dan solusi kreatif untuk transformasi bisnis Anda." />
   <meta name="robots" content="index,follow" />
@@ -29,42 +30,108 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
 
   <style>
+    /* ========= TOKENS (match warna logo: teal/turquoise) ========= */
     :root{
-      --primary:#10bfa4; --primary-600:#0ea894; --accent:#12d3b7; --secondary:#0b1220;
-      --bg:#f7faf9; --surface:#ffffff; --ink:#0b1220; --muted:#62707f; --border:#e5e9ec;
+      --primary:#10bfa4;        /* teal utama */
+      --primary-600:#0ea894;    /* teal lebih gelap */
+      --accent:#12d3b7;         /* aksen terang */
+      --ink:#0b1220;            /* teks utama (gelap) */
+      --muted:#63707f;          /* teks sekunder */
+      --bg:#f7faf9;             /* latar */
+      --surface:#ffffff;        /* kartu/permukaan */
+      --border:#e5e9ec;         /* garis halus */
       --success:#0fb985; --error:#ef4444;
-      --container:1120px; --header-h:64px;
+
+      --container:1120px;
+      --header-h:64px;
       --radius:14px; --radius-sm:10px;
-      --shadow:0 6px 20px rgba(2,8,23,.08); --shadow-sm:0 2px 10px rgba(2,8,23,.06);
+      --shadow:0 6px 20px rgba(2,8,23,.08);
+      --shadow-sm:0 2px 10px rgba(2,8,23,.06);
       --transition:all .25s ease;
+
       --space-1:.25rem; --space-2:.5rem; --space-3:.75rem; --space-4:1rem; --space-5:1.25rem;
       --space-6:1.5rem; --space-8:2rem; --space-10:2.5rem; --space-12:3rem; --space-16:4rem; --space-24:6rem;
     }
+
+    /* ========= RESET ========= */
     *{margin:0;padding:0;box-sizing:border-box}
     html,body{height:100%}
     html{-webkit-text-size-adjust:100%}
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;-webkit-tap-highlight-color:transparent;padding-top:calc(var(--header-h) + env(safe-area-inset-top, 0px))}
-    input,select,textarea{font-size:16px}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background:var(--bg); color:var(--ink); line-height:1.6;
+      -webkit-tap-highlight-color:transparent;
+      padding-top:calc(var(--header-h) + env(safe-area-inset-top, 0px)); /* beri ruang untuk header fixed */
+    }
+    input,select,textarea{font-size:16px} /* cegah auto-zoom Safari */
 
+    /* ========= SKIP LINK ========= */
     .skip-link{position:absolute;left:-9999px;top:0;background:#111;color:#fff;padding:.5rem .75rem;border-radius:10px}
     .skip-link:focus{left:.75rem;top:.75rem;z-index:9999}
 
-    .header{position:fixed;left:0;right:0;top:0;z-index:1000;height:calc(var(--header-h) + env(safe-area-inset-top,0px));background:rgba(255,255,255,.94);border-bottom:1px solid var(--border);padding-top:env(safe-area-inset-top,0px);-webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px)}
-    .nav{max-width:var(--container);margin:0 auto;padding:0 var(--space-6);height:var(--header-h);display:grid;grid-template-columns:auto 1fr auto;gap:var(--space-4);align-items:center}
-    .brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
-    .brand img{height:32px;width:auto;display:block}
-    .brand span{font-weight:800;letter-spacing:.2px;color:var(--primary)}
-    .links{display:flex;gap:var(--space-6);justify-self:center}
-    .nav-link{font-weight:600;text-decoration:none;color:#0b1220b3;padding:.25rem;border-radius:8px}
+    /* ========= HEADER (fix iPhone + badge tidak kepotong) ========= */
+    .header{
+      position:fixed; left:0; right:0; top:0; z-index:1000;
+      height:calc(var(--header-h) + env(safe-area-inset-top,0px));
+      padding-top:env(safe-area-inset-top,0px);
+      background:rgba(255,255,255,.94);
+      border-bottom:1px solid var(--border);
+      -webkit-backdrop-filter:saturate(180%) blur(14px);
+      backdrop-filter:saturate(180%) blur(14px);
+    }
+    .nav{
+      max-width:var(--container);
+      margin:0 auto;
+      height:var(--header-h);
+      padding:0 var(--space-6);
+      display:grid;
+      grid-template-columns:auto 1fr auto;
+      align-items:center;
+      gap:var(--space-4);
+      overflow:visible; /* penting untuk badge */
+    }
+
+    /* Brand kiri */
+    .brand{display:flex;align-items:center;gap:.65rem;text-decoration:none;white-space:nowrap}
+    .brand img{height:28px;width:auto;display:block}      /* lebih pas di HP */
+    .brand span{font-weight:800;letter-spacing:.2px;color:var(--primary);font-size:1.25rem}
+
+    /* Link tengah (disembunyikan di mobile) */
+    .links{display:flex;gap:var(--space-6);justify-self:center;white-space:nowrap}
+    .nav-link{font-weight:600;text-decoration:none;color:#0b1220b3;padding:.25rem .25rem;border-radius:8px}
     .nav-link:hover{color:var(--primary)}
-    .actions{display:flex;gap:var(--space-3)}
-    .icon-btn{width:40px;height:40px;border:1px solid var(--border);background:var(--surface);border-radius:50%;display:grid;place-items:center;cursor:pointer;transition:var(--transition);position:relative}
+
+    /* Ikon kanan */
+    .actions{
+      display:flex; gap:.5rem; align-items:center; flex-wrap:nowrap;
+      overflow:visible; /* jangan kepotong */
+    }
+    .icon-btn{
+      width:44px;height:44px; /* tap target >=44px */
+      border:1px solid var(--border); background:var(--surface);
+      border-radius:999px; display:grid; place-items:center;
+      cursor:pointer; transition:var(--transition); position:relative; flex:0 0 auto;
+    }
     .icon-btn:hover{transform:translateY(-1px);border-color:#d1d8de;box-shadow:var(--shadow-sm);color:var(--primary)}
-    .badge{position:absolute;right:-2px;top:-2px;background:var(--accent);color:#043a33;border:1px solid #8bf0e1;border-radius:999px;min-width:18px;height:18px;padding:0 6px;display:grid;place-items:center;font-size:.7rem;transform:translate(25%,-25%);font-weight:800}
+    .badge{
+      position:absolute; right:-6px; top:-6px;
+      background:var(--accent); color:#043a33;
+      border:1px solid #8bf0e1; border-radius:999px;
+      min-width:18px; height:18px; padding:0 6px;
+      display:grid; place-items:center; font-size:.7rem; font-weight:800;
+    }
     .hamburger{display:none}
     .drawer{display:none}
 
-    .hero{position:relative;background:radial-gradient(1200px 600px at 20% -10%, rgba(16,191,164,.35) 0%, rgba(16,191,164,0) 60%),linear-gradient(140deg,#14b8a6 0%, #0ea894 28%, #0b1220 85%);color:#fff}
+    /* ========= HERO ========= */
+    .hero{
+      position:relative;
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(16,191,164,.35) 0%, rgba(16,191,164,0) 60%),
+        linear-gradient(140deg,#14b8a6 0%, #0ea894 28%, #0b1220 85%);
+      color:#fff;
+      scroll-margin-top: calc(var(--header-h) + 12px);
+    }
     .hero-inner{max-width:var(--container);margin:0 auto;padding:var(--space-24) var(--space-6) var(--space-24);text-align:center}
     .hero h1{font-weight:800;line-height:1.08;letter-spacing:.2px;font-size:clamp(2rem,3.6vw,3.25rem)}
     .hero h1 .sub{display:block;color:#bdf6ed}
@@ -76,6 +143,7 @@
     .btn-ghost{background:rgba(255,255,255,.08);color:#ecfffd;border:1px solid rgba(255,255,255,.22)}
     .btn-ghost:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
 
+    /* ========= PRODUCTS ========= */
     .section{padding:var(--space-24) 0}
     .container{max-width:var(--container);margin:0 auto;padding:0 var(--space-6)}
     .section-title{font-size:clamp(1.75rem,2.4vw,2.25rem);text-align:center;font-weight:800;margin-bottom:var(--space-12);background:linear-gradient(135deg,#0ea894,#0b1220);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
@@ -104,7 +172,7 @@
     .price{font-weight:900;color:#0a8f7e;font-size:1.25rem}
     .actions{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap;justify-content:flex-end}
 
-    /* tombol baru: Beli */
+    /* tombol Beli */
     .btn-buy{display:inline-flex;align-items:center;gap:.5rem;padding:.65rem 1rem;border-radius:12px;border:1px solid #8bf0e1;background:var(--primary);color:#053b34;font-weight:800;cursor:pointer;transition:var(--transition)}
     .btn-buy:hover{background:var(--primary-600);transform:translateY(-2px)}
     .round{width:42px;height:42px;border:none;border-radius:12px;display:grid;place-items:center;cursor:pointer;transition:var(--transition)}
@@ -112,6 +180,7 @@
     .round.wish.active{background:var(--accent);color:#053b34;border-color:#8bf0e1}
     .round:hover{transform:translateY(-2px)}
 
+    /* ========= CART ========= */
     .overlay{position:fixed;inset:0;background:rgba(11,18,32,.45);opacity:0;visibility:hidden;transition:var(--transition);z-index:998}
     .overlay.active{opacity:1;visibility:visible}
     .cart{position:fixed;top:0;right:-420px;width:min(94vw,400px);height:100vh;background:#fff;border-left:1px solid var(--border);box-shadow:var(--shadow);z-index:999;transition:var(--transition);display:flex;flex-direction:column}
@@ -125,11 +194,13 @@
     .btn-check{padding:1rem;border:none;border-radius:12px;background:var(--primary);color:#053b34;font-weight:900;cursor:pointer;transition:var(--transition);border:1px solid #8bf0e1}
     .btn-check:hover{background:var(--primary-600)}
 
+    /* ========= NOTIFICATION ========= */
     .note{position:fixed;top:calc(var(--header-h) + 24px);right:16px;background:#fff;border-left:4px solid var(--primary);box-shadow:var(--shadow);border-radius:12px;padding:.9rem 1.1rem;display:flex;align-items:center;gap:.75rem;transform:translateX(420px);transition:transform .3s ease;z-index:1001}
     .note.show{transform:translateX(0)}
     .note.success{border-left-color:var(--success)}
     .note.error{border-left-color:var(--error)}
 
+    /* ========= SKELETON ========= */
     .sk{background:linear-gradient(90deg,#eef6f5 25%,#f8fdfc 37%,#eef6f5 63%);background-size:400% 100%;animation:shimmer 1.2s ease infinite;border-radius:12px}
     @keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
     .sk-card{border:1px solid var(--border);background:#fff;border-radius:var(--radius);box-shadow:var(--shadow-sm);overflow:hidden}
@@ -137,6 +208,7 @@
     .sk-body{padding:var(--space-6)}
     .sk-line{height:14px;margin:.6rem 0}
 
+    /* ========= FOOTER ========= */
     footer{margin-top:var(--space-24);background:#fff;border-top:1px solid var(--border)}
     .foot{max-width:var(--container);margin:0 auto;padding:var(--space-8) var(--space-6);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-4);color:var(--muted)}
     .foot .brand-mini{display:flex;align-items:center;gap:.6rem}
@@ -145,21 +217,29 @@
     .social a{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border:1px solid var(--border);border-radius:10px;color:#3a4a50;text-decoration:none;transition:var(--transition)}
     .social a:hover{color:var(--primary);border-color:#8bf0e1;box-shadow:var(--shadow-sm)}
 
+    /* ========= A11Y & MOBILE NAV ========= */
     :focus-visible{outline:3px solid var(--primary);outline-offset:2px}
     @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
     @media (max-width:768px){
       .links{display:none}
       .hamburger{display:inline-grid;place-items:center}
-      .drawer{display:block;position:fixed;top:calc(var(--header-h) + env(safe-area-inset-top,0px));left:0;right:0;background:#fff;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:var(--transition);z-index:999}
-      .drawer.open{transform:translateY(0)}
-      .drawer a{display:block;padding:1rem var(--space-6);border-top:1px solid var(--border);text-decoration:none;color:#0b1220}
-      .drawer a:active{background:#f4fbfa}
+      .brand img{height:26px}
+      .drawer{
+        display:block; position:fixed;
+        top: calc(var(--header-h) + env(safe-area-inset-top,0px));
+        left:0; right:0; background:#fff; border-bottom:1px solid var(--border);
+        transform: translateY(-120%); transition: var(--transition); z-index:999;
+      }
+      .drawer.open{ transform: translateY(0); }
+      .drawer a{ display:block; padding:1rem var(--space-6); border-top:1px solid var(--border); text-decoration:none; color:#0b1220 }
+      .drawer a:active{ background:#f4fbfa }
     }
   </style>
 </head>
 <body>
   <a href="#produk" class="skip-link">Lewati ke konten</a>
 
+  <!-- ========= HEADER ========= -->
   <header class="header" role="banner">
     <nav class="nav" aria-label="Navigasi utama">
       <a class="brand" href="#home" aria-label="Digineer Store">
@@ -194,6 +274,7 @@
       </div>
     </nav>
 
+    <!-- Drawer mobile -->
     <div class="drawer" id="drawer" aria-label="Menu mobile">
       <a href="#home" onclick="closeDrawer()">Home</a>
       <a href="#produk" onclick="closeDrawer()">Produk</a>
@@ -202,6 +283,7 @@
     </div>
   </header>
 
+  <!-- ========= HERO ========= -->
   <section class="hero" id="home" role="region" aria-label="Hero">
     <div class="hero-inner">
       <h1>Solusi Digital <span class="sub">Profesional</span></h1>
@@ -213,6 +295,7 @@
     </div>
   </section>
 
+  <!-- ========= PRODUCTS ========= -->
   <section class="section" id="produk" role="region" aria-label="Layanan Kami">
     <div class="container">
       <h2 class="section-title">Layanan Kami</h2>
@@ -234,6 +317,7 @@
     </div>
   </section>
 
+  <!-- ========= CART ========= -->
   <div class="overlay" id="overlay" onclick="toggleCart()" aria-hidden="true"></div>
   <aside class="cart" id="cart" aria-label="Keranjang Belanja">
     <div class="cart-h">
@@ -247,8 +331,10 @@
     </div>
   </aside>
 
+  <!-- Live region untuk SR -->
   <div id="liveRegion" aria-live="polite" aria-atomic="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;"></div>
 
+  <!-- ========= FOOTER ========= -->
   <footer role="contentinfo">
     <div class="foot">
       <div class="brand-mini">
@@ -263,7 +349,9 @@
     </div>
   </footer>
 
+  <!-- ========= SCRIPTS ========= -->
   <script>
+    /* ---------- Data ---------- */
     const products = [
       { id:'p1', name:'Paket Branding Professional', category:'design', price:2500000, image:'https://images.unsplash.com/photo-1565688534245-05d6b5be184a?auto=format&fit=crop&w=800&q=80', description:'Logo, brand guide, stationery design, dan social media kit lengkap' },
       { id:'p2', name:'Website Company Profile', category:'development', price:3500000, image:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80', description:'Website perusahaan modern dengan CMS custom dan responsive design' },
@@ -273,16 +361,19 @@
       { id:'p6', name:'Social Media Content', category:'design', price:800000, image:'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80', description:'Paket konten media sosial 1 bulan dengan design yang konsisten' }
     ];
 
+    /* ---------- State ---------- */
     let cart = JSON.parse(localStorage.getItem('digineer-cart')) || [];
     let wishlist = JSON.parse(localStorage.getItem('digineer-wishlist')) || [];
     let currentFilter = 'all';
     let currentSearch = '';
     const IDR = new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0});
 
+    /* ---------- WhatsApp normalize ---------- */
     const WHATSAPP_NUMBER = '089507083879';
     const toWaIntl = n => { let s=(n||'').replace(/\D/g,''); if(s.startsWith('0')) s='62'+s.slice(1); if(s.startsWith('620')) s='62'+s.slice(2); return s; };
     const WAPP = toWaIntl(WHATSAPP_NUMBER);
 
+    /* ---------- Utilities ---------- */
     const debounce = (fn, d=300)=>{ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),d); } };
     const escapeHTML = s => (s||'').replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
     const getCategoryName = c => ({design:'Desain',development:'Development',video:'Video Production'})[c]||c;
@@ -298,11 +389,13 @@
       const chip = document.querySelectorAll('.chip')[idx]; if(chip){chip.classList.add('active');chip.setAttribute('aria-selected','true')}
     }
 
+    /* ---------- Drawer (mobile nav) ---------- */
     const btnMenu = document.getElementById('btnMenu');
     const drawer = document.getElementById('drawer');
     function closeDrawer(){ drawer.classList.remove('open'); btnMenu.setAttribute('aria-expanded','false'); }
     btnMenu?.addEventListener('click', ()=>{ const open = drawer.classList.toggle('open'); btnMenu.setAttribute('aria-expanded', String(open)); });
 
+    /* ---------- Skeleton ---------- */
     function showSkeleton(n=6){
       const grid=document.getElementById('productsContainer');
       grid.setAttribute('aria-busy','true');
@@ -313,6 +406,7 @@
         </div></div>`).join('');
     }
 
+    /* ---------- Render Products ---------- */
     function renderProducts(){
       const grid=document.getElementById('productsContainer');
       let list=[...products];
@@ -357,6 +451,7 @@
     }
     function displayProducts(){ renderProducts(); syncStateToURL(); }
 
+    /* ---------- Filter & Search ---------- */
     function filterProducts(cat, el){
       currentFilter=cat;
       document.querySelectorAll('.chip').forEach(c=>{c.classList.remove('active');c.setAttribute('aria-selected','false')});
@@ -366,6 +461,7 @@
     const onSearch = debounce((q)=>{ currentSearch=(q||'').trim(); displayProducts(); },300);
     function resetSearch(){ currentSearch=''; const i=document.getElementById('searchInput'); if(i) i.value=''; displayProducts(); }
 
+    /* ---------- Cart UX & A11y ---------- */
     const overlay = document.getElementById('overlay');
     const cartEl = document.getElementById('cart');
     let lastFocused=null;
@@ -435,6 +531,7 @@
       setTimeout(()=>{ cart=[]; localStorage.setItem('digineer-cart',JSON.stringify(cart)); updateCartUI(); toggleCart(); },1800);
     }
 
+    /* ---------- Wishlist ---------- */
     function toggleWishlist(id){
       const i=wishlist.indexOf(id);
       if(i>-1){ wishlist.splice(i,1); showNotification('Dihapus dari wishlist','success'); }
@@ -444,6 +541,7 @@
       displayProducts();
     }
 
+    /* ---------- Notification ---------- */
     function showNotification(message, type='success'){
       const live=document.getElementById('liveRegion'); if(live) live.textContent=message;
       const exist=document.querySelector('.note'); if(exist) exist.remove();
@@ -454,8 +552,10 @@
       setTimeout(()=>{ n.classList.remove('show'); setTimeout(()=>n.remove(),280) }, 2800);
     }
 
+    /* ---------- Helpers ---------- */
     function scrollToProducts(){ document.getElementById('produk').scrollIntoView({behavior:'smooth'}); }
 
+    /* ---------- Init ---------- */
     function init(){
       readStateFromURL();
       showSkeleton();
