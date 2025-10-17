@@ -1,581 +1,90 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin • Digineer Store</title>
-  <meta name="robots" content="noindex,nofollow"/>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Admin – Digineer Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
-    :root{
-      --primary:#6366f1;--primary-dark:#4f46e5;--accent:#ec4899;--gray:#6b7280;--light:#f8fafc;--border:#e5e7eb;
-      --danger:#ef4444; --warn:#f59e0b; --ok:#10b981;
-      --shadow:0 10px 15px -3px rgba(0,0,0,.1);
-      --radius:14px;
-    }
-    *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Inter',sans-serif;background:#fff;color:#111}
-    a{text-decoration:none;color:inherit}
-    .wrap{max-width:1200px;margin:0 auto;padding:16px}
-    header.top{display:flex;align-items:center;justify-content:space-between;margin:12px 0 16px;gap:10px;flex-wrap:wrap}
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800}
-    .brand i{color:var(--primary)}
-    .btn{display:inline-flex;align-items:center;gap:.5rem;border:none;cursor:pointer;border-radius:12px;padding:.7rem 1rem;font-weight:800}
-    .btn:disabled{opacity:.6;cursor:not-allowed}
-    .btn-primary{background:var(--primary);color:#fff}
-    .btn-primary:hover{background:var(--primary-dark)}
-    .btn-ghost{background:#fff;border:1px solid var(--border)}
-    .btn-ghost:hover{background:#f9fafb}
-    .btn-danger{background:#fff;border:1px solid var(--danger);color:var(--danger)}
-    .btn-danger:hover{background:#fff3f3}
-    .grid{display:grid;grid-template-columns:1.4fr .9fr;gap:16px}
-    @media (max-width: 992px){.grid{grid-template-columns:1fr}}
-    .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .card .head{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-    .card .body{padding:16px}
-
-    table{width:100%;border-collapse:collapse}
-    th,td{padding:12px;border-bottom:1px solid #f1f5f9;text-align:left}
-    th{font-weight:800}
-    tr:hover{background:#fafafa}
-
-    .toolbar{display:flex;flex-wrap:wrap;gap:8px}
-    .field{display:grid;gap:6px;margin-bottom:10px}
-    input,select,textarea{border:1px solid var(--border);border-radius:10px;padding:12px}
-    textarea{resize:vertical}
-    .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
-    @media (max-width:640px){.row2,.row3{grid-template-columns:1fr}}
-    .muted{color:var(--gray);font-size:.92rem}
-    .badge{display:inline-block;background:#eef2ff;color:#3730a3;border-radius:999px;padding:.25rem .6rem;font-weight:700;font-size:.85rem}
-    .role{display:inline-block;padding:.18rem .5rem;border-radius:999px;font-weight:800;font-size:.78rem}
-    .role.admin{background:#fef3c7;color:#92400e}
-    .role.editor{background:#dcfce7;color:#065f46}
-    .role.viewer{background:#e5e7eb;color:#374151}
-
-    .toast{position:fixed;right:14px;bottom:14px;background:#fff;border:1px solid var(--border);border-left:4px solid var(--primary);
-           padding:.8rem 1rem;border-radius:12px;box-shadow:var(--shadow);opacity:0;transform:translateY(10px);transition:.25s;z-index:10}
-    .toast.show{opacity:1;transform:translateY(0)}
-
-    /* Login */
-    .login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#eef2ff,#fff)}
-    .login-card{width:100%;max-width:420px;background:#fff;border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);padding:22px}
-    .login-card h1{font-size:1.35rem;margin-bottom:.5rem}
-    .login-card .muted{margin-bottom:12px}
+    :root{--border:#e5e7eb;--ink:#0f172a;--muted:#64748b;--primary:#6366f1;--radius:12px}
+    *{box-sizing:border-box} body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#f8fafc}
+    .wrap{max-width:1000px;margin:24px auto;padding:0 16px}
+    h1{font-size:1.6rem;margin:0 0 16px}
+    .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .grid-1{grid-template-columns:1fr}
+    label{font-weight:600;font-size:.9rem}
+    input,select,textarea{width:100%;border:1px solid var(--border);border-radius:10px;padding:10px;font-size:14px}
+    textarea{min-height:88px;resize:vertical}
+    .actions{display:flex;gap:8px;margin-top:8px}
+    button{border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
+    .primary{background:var(--primary);color:#fff}
+    .ghost{background:#f3f4f6}
+    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    th,td{border-top:1px solid var(--border);padding:10px;text-align:left;vertical-align:top}
+    th{background:#f9fafb}
+    .badge{font-size:.75rem;color:#475569}
+    a.btn-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;text-decoration:none;color:#334155}
+    a.btn-back:hover{color:#111827}
   </style>
 </head>
 <body>
+  <div class="wrap">
+    <a class="btn-back" href="index.html"><i class="fa fa-arrow-left"></i> Kembali ke Katalog</a>
+    <h1>Admin – Produk</h1>
 
-  <!-- LOGIN VIEW -->
-  <div id="loginView" class="login-wrap" hidden>
-    <div class="login-card">
-      <h1><i class="fas fa-shield-alt" style="color:var(--primary)"></i> Login Admin</h1>
-      <p class="muted">Masuk untuk mengelola produk & pengguna.</p>
-      <form onsubmit="return doLogin(event)">
-        <div class="field">
-          <label for="lUser">Username</label>
-          <input id="lUser" autocomplete="username" required>
+    <div class="card">
+      <form id="form">
+        <div class="grid">
+          <div>
+            <label>Nama</label>
+            <input id="name" required>
+          </div>
+          <div>
+            <label>Kategori</label>
+            <select id="category">
+              <option value="design">Desain</option>
+              <option value="development">Development</option>
+              <option value="video">Video</option>
+            </select>
+          </div>
+          <div>
+            <label>Harga (IDR)</label>
+            <input id="price" type="number" min="0" step="1000" required>
+          </div>
+          <div>
+            <label>URL Gambar</label>
+            <input id="image" placeholder="https://...">
+          </div>
         </div>
-        <div class="field">
-          <label for="lPass">Password</label>
-          <input id="lPass" type="password" autocomplete="current-password" required>
+        <div class="grid grid-1" style="margin-top:8px">
+          <div>
+            <label>Deskripsi</label>
+            <textarea id="description"></textarea>
+          </div>
         </div>
-        <div class="row2">
-          <button class="btn btn-primary" type="submit"><i class="fas fa-right-to-bracket"></i> Masuk</button>
-          <a href="./" class="btn btn-ghost"><i class="fas fa-store"></i> Kembali ke Store</a>
+        <div class="actions">
+          <button class="primary" type="submit" id="btnSave"><i class="fa fa-save"></i> Simpan</button>
+          <button class="ghost" type="button" id="btnReset"><i class="fa fa-rotate-left"></i> Reset</button>
+          <span class="badge" id="status"></span>
         </div>
-        <p class="muted" style="margin-top:8px">Default: <code>admin / admin123</code> (ganti segera di menu “Akun Saya”).</p>
+        <input type="hidden" id="id">
       </form>
     </div>
-  </div>
 
-  <!-- APP VIEW -->
-  <div id="appView" class="wrap" hidden>
-    <header class="top">
-      <div class="brand"><i class="fas fa-user-cog"></i> Admin Panel</div>
-      <div class="toolbar">
-        <a class="btn btn-ghost" href="./"><i class="fas fa-arrow-left"></i> Store</a>
-        <button class="btn btn-ghost" onclick="exportProducts()"><i class="fas fa-download"></i> Export Produk</button>
-        <label class="btn btn-ghost" for="importFile"><i class="fas fa-upload"></i> Import Produk</label>
-        <input id="importFile" style="display:none" type="file" accept="application/json" onchange="importProducts(event)"/>
-        <button id="btnNew" class="btn btn-primary" onclick="newProduct()"><i class="fas fa-plus"></i> Produk Baru</button>
-        <button class="btn btn-ghost" onclick="openMyAccount()"><i class="fas fa-user-shield"></i> Akun Saya</button>
-        <button class="btn btn-danger" onclick="logout()"><i class="fas fa-right-from-bracket"></i> Logout</button>
-      </div>
-    </header>
-
-    <div class="grid">
-      <!-- Produk -->
-      <section class="card">
-        <div class="head">
-          <strong>Daftar Produk</strong>
-          <div class="muted" id="countLbl">0 item</div>
-        </div>
-        <div class="body">
-          <div style="overflow:auto">
-            <table aria-label="Daftar produk">
-              <thead>
-                <tr>
-                  <th>Nama</th>
-                  <th>Kategori</th>
-                  <th>Harga</th>
-                  <th>Badge</th>
-                  <th style="width:210px">Aksi</th>
-                </tr>
-              </thead>
-              <tbody id="rows"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- Form Produk -->
-      <aside class="card" aria-label="Form produk">
-        <div class="head"><strong>Form Produk</strong></div>
-        <div class="body">
-          <form id="form" onsubmit="saveProduct(event)">
-            <input type="hidden" id="prodId">
-            <div class="field">
-              <label for="prodName">Nama</label>
-              <input id="prodName" required>
-            </div>
-            <div class="row2">
-              <div class="field">
-                <label for="prodCategory">Kategori</label>
-                <select id="prodCategory" required>
-                  <option value="design">Design</option>
-                  <option value="development">Development</option>
-                  <option value="video">Video</option>
-                </select>
-              </div>
-              <div class="field">
-                <label for="prodPrice">Harga (IDR)</label>
-                <input id="prodPrice" type="number" min="0" step="1" required>
-              </div>
-            </div>
-            <div class="row2">
-              <div class="field">
-                <label for="prodBadge">Badge</label>
-                <input id="prodBadge" placeholder="cth: Popular / Featured / New">
-              </div>
-              <div class="field">
-                <label for="prodImage">URL Gambar</label>
-                <input id="prodImage" type="url" required>
-              </div>
-            </div>
-            <div class="field">
-              <label for="prodDesc">Deskripsi</label>
-              <textarea id="prodDesc" rows="4" required></textarea>
-            </div>
-            <div class="row3">
-              <button id="btnSave" type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-              <button type="button" class="btn btn-ghost" onclick="resetForm()"><i class="fas fa-undo"></i> Reset</button>
-              <button id="btnDelete" type="button" class="btn btn-danger" onclick="deleteCurrent()" disabled><i class="fas fa-trash"></i> Hapus</button>
-            </div>
-          </form>
-          <p class="muted" style="margin-top:10px">Data disimpan di <strong>LocalStorage</strong> (kunci: <code>digineer-products</code>) dan otomatis muncul di halaman toko.</p>
-        </div>
-      </aside>
+    <div class="card">
+      <table>
+        <thead>
+          <tr><th>Nama</th><th>Kategori</th><th>Harga</th><th>Gambar</th><th>Aksi</th></tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
     </div>
 
-    <!-- Kelola User (Admin Only) -->
-    <section class="card" id="userCard" style="margin-top:16px" hidden>
-      <div class="head">
-        <strong>Kelola Pengguna</strong>
-        <span class="muted" id="userCount">0 user</span>
-      </div>
-      <div class="body">
-        <div class="toolbar" style="margin-bottom:10px">
-          <button class="btn btn-primary" onclick="newUser()"><i class="fas fa-user-plus"></i> User Baru</button>
-        </div>
-        <div style="overflow:auto">
-          <table>
-            <thead>
-              <tr><th>Username</th><th>Role</th><th>Aksi</th></tr>
-            </thead>
-            <tbody id="userRows"></tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+    <p class="badge">Tips: buka tab katalog (index.html) di browser yang sama. Saat menyimpan di sini, daftar layanan pada katalog akan update otomatis.</p>
   </div>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-
-  <!-- Dialog Akun Saya -->
-  <dialog id="myAccount" style="border:none;border-radius:16px;padding:0;max-width:520px;width:100%">
-    <div class="card" style="border:none;box-shadow:none">
-      <div class="head"><strong>Akun Saya</strong></div>
-      <div class="body">
-        <p class="muted" id="meInfo"></p>
-        <form onsubmit="return changePassword(event)">
-          <div class="field">
-            <label>Password Saat Ini</label>
-            <input id="cpOld" type="password" required>
-          </div>
-          <div class="row2">
-            <div class="field">
-              <label>Password Baru</label>
-              <input id="cpNew" type="password" minlength="6" required>
-            </div>
-            <div class="field">
-              <label>Ulangi Password Baru</label>
-              <input id="cpNew2" type="password" minlength="6" required>
-            </div>
-          </div>
-          <div class="row2" style="margin-top:8px">
-            <button class="btn btn-primary" type="submit"><i class="fas fa-key"></i> Ganti Password</button>
-            <button class="btn btn-ghost" type="button" onclick="closeMyAccount()">Tutup</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </dialog>
-
-  <script>
-    // ===== CONSTANTS & STORAGE KEYS =====
-    const PRODUCTS_KEY = 'digineer-products';
-    const USERS_KEY = 'digineer-users';
-    const SESSION_KEY = 'digineer-session';
-    const IDR = new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0});
-
-    // ===== DEFAULTS =====
-    const DEFAULT_PRODUCTS = [
-      { id:'p1', name:'Paket Branding Professional', category:'design', price:2500000,
-        image:'https://images.unsplash.com/photo-1565688534245-05d6b5be184a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        description:'Logo, brand guide, stationery design, dan social media kit lengkap', badge:'Popular' },
-      { id:'p2', name:'Website Company Profile', category:'development', price:3500000,
-        image:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        description:'Website perusahaan modern dengan CMS custom dan responsive design', badge:'Featured' }
-    ];
-
-    // ===== STATE =====
-    let products = [];
-    let users = [];
-    let me = null; // {username, role}
-
-    // ===== UTIL =====
-    const q = s => document.querySelector(s);
-    const toastEl = q('#toast');
-    function toast(msg,type='ok'){
-      toastEl.textContent = msg;
-      toastEl.style.borderLeftColor = type==='err' ? '#ef4444' : type==='warn' ? '#f59e0b' : '#6366f1';
-      toastEl.classList.add('show');
-      setTimeout(()=>toastEl.classList.remove('show'), 1800);
-    }
-    function escapeHTML(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));}
-    function randomHex(bytes=16){
-      const arr=new Uint8Array(bytes); crypto.getRandomValues(arr);
-      return Array.from(arr).map(b=>b.toString(16).padStart(2,'0')).join('');
-    }
-    async function sha256Hex(str){
-      const enc=new TextEncoder().encode(str);
-      const buf=await crypto.subtle.digest('SHA-256',enc);
-      return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-    }
-
-    // ===== AUTH & USERS =====
-    async function ensureSeed(){
-      // Products
-      try{
-        const savedP = JSON.parse(localStorage.getItem(PRODUCTS_KEY));
-        products = Array.isArray(savedP) && savedP.length ? savedP : DEFAULT_PRODUCTS.slice();
-      }catch(e){ products = DEFAULT_PRODUCTS.slice(); }
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
-
-      // Users
-      try{
-        const savedU = JSON.parse(localStorage.getItem(USERS_KEY));
-        if(Array.isArray(savedU) && savedU.length){ users = savedU; }
-        else {
-          // default admin: admin / admin123
-          const salt = randomHex(16);
-          const hash = await sha256Hex(`${salt}:${'admin123'}`);
-          users = [{ username:'admin', role:'admin', salt, hash }];
-          localStorage.setItem(USERS_KEY, JSON.stringify(users));
-        }
-      }catch(e){
-        const salt = randomHex(16);
-        const hash = await sha256Hex(`${salt}:${'admin123'}`);
-        users = [{ username:'admin', role:'admin', salt, hash }];
-        localStorage.setItem(USERS_KEY, JSON.stringify(users));
-      }
-    }
-
-    function getSession(){
-      try{ return JSON.parse(sessionStorage.getItem(SESSION_KEY)) || null; }catch(e){ return null; }
-    }
-    function setSession(obj){
-      sessionStorage.setItem(SESSION_KEY, JSON.stringify(obj));
-    }
-    function clearSession(){
-      sessionStorage.removeItem(SESSION_KEY);
-    }
-
-    async function doLogin(e){
-      e.preventDefault();
-      const u = q('#lUser').value.trim();
-      const p = q('#lPass').value;
-      const user = users.find(x=>x.username===u);
-      if(!user){ toast('User tidak ditemukan','err'); return false; }
-      const calc = await sha256Hex(`${user.salt}:${p}`);
-      if(calc !== user.hash){ toast('Password salah','err'); return false; }
-      me = { username: user.username, role: user.role };
-      setSession(me);
-      q('#lPass').value='';
-      initApp();
-      return false;
-    }
-
-    function logout(){
-      clearSession(); me=null;
-      q('#appView').hidden = true;
-      q('#loginView').hidden = false;
-      toast('Logout berhasil');
-    }
-
-    function openMyAccount(){
-      const dlg = q('#myAccount');
-      q('#meInfo').textContent = `Login sebagai: ${me.username} (${me.role})`;
-      q('#cpOld').value = ''; q('#cpNew').value = ''; q('#cpNew2').value = '';
-      dlg.showModal();
-    }
-    function closeMyAccount(){ q('#myAccount').close(); }
-
-    async function changePassword(e){
-      e.preventDefault();
-      const oldP = q('#cpOld').value;
-      const n1 = q('#cpNew').value;
-      const n2 = q('#cpNew2').value;
-      if(n1 !== n2){ toast('Password baru tidak sama','err'); return false; }
-      const user = users.find(x=>x.username===me.username);
-      const now = await sha256Hex(`${user.salt}:${oldP}`);
-      if(now !== user.hash){ toast('Password saat ini salah','err'); return false; }
-      const newSalt = randomHex(16);
-      const newHash = await sha256Hex(`${newSalt}:${n1}`);
-      user.salt = newSalt; user.hash = newHash;
-      localStorage.setItem(USERS_KEY, JSON.stringify(users));
-      toast('Password diganti'); closeMyAccount();
-      return false;
-    }
-
-    // ===== USER MANAGEMENT (ADMIN) =====
-    function isAdmin(){ return me && me.role==='admin'; }
-    function canEdit(){ return me && (me.role==='admin' || me.role==='editor'); }
-    function canDelete(){ return me && me.role==='admin'; }
-
-    function renderUsers(){
-      const tbody = q('#userRows');
-      q('#userCount').textContent = users.length + ' user';
-      tbody.innerHTML = users.map(u=>`
-        <tr>
-          <td>${escapeHTML(u.username)}</td>
-          <td>
-            <span class="role ${u.role}">${u.role}</span>
-          </td>
-          <td style="white-space:nowrap">
-            <button class="btn btn-ghost" onclick="changeRole('${u.username}')"><i class="fas fa-user-tag"></i> Role</button>
-            <button class="btn btn-ghost" onclick="resetUserPassword('${u.username}')"><i class="fas fa-key"></i> Reset Password</button>
-            <button class="btn btn-danger" onclick="deleteUser('${u.username}')" ${u.username==='admin'?'disabled':''}><i class="fas fa-user-minus"></i> Hapus</button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function newUser(){
-      const username = prompt('Username baru:');
-      if(!username) return;
-      if(users.find(u=>u.username===username)){ toast('Username sudah ada','err'); return; }
-      const role = prompt('Role (admin/editor/viewer):','viewer') || 'viewer';
-      if(!['admin','editor','viewer'].includes(role)){ toast('Role tidak valid','err'); return; }
-      const pass = prompt('Password sementara (min 6 karakter):','changeme');
-      if(!pass || pass.length<6){ toast('Password terlalu pendek','err'); return; }
-      const salt = randomHex(16);
-      sha256Hex(`${salt}:${pass}`).then(hash=>{
-        users.push({username, role, salt, hash});
-        localStorage.setItem(USERS_KEY, JSON.stringify(users));
-        renderUsers();
-        toast('User dibuat');
-      });
-    }
-
-    function changeRole(username){
-      const u = users.find(x=>x.username===username); if(!u) return;
-      const role = prompt('Role baru (admin/editor/viewer):', u.role) || u.role;
-      if(!['admin','editor','viewer'].includes(role)){ toast('Role tidak valid','err'); return; }
-      u.role = role;
-      localStorage.setItem(USERS_KEY, JSON.stringify(users));
-      renderUsers(); toast('Role diupdate');
-      if(me.username===u.username){ me.role=role; setSession(me); applyPermissions(); }
-    }
-
-    function resetUserPassword(username){
-      const u = users.find(x=>x.username===username); if(!u) return;
-      const pass = prompt(`Password baru untuk ${username}:`,'changeme');
-      if(!pass || pass.length<6){ toast('Password terlalu pendek','err'); return; }
-      const salt = randomHex(16);
-      sha256Hex(`${salt}:${pass}`).then(hash=>{
-        u.salt=salt; u.hash=hash;
-        localStorage.setItem(USERS_KEY, JSON.stringify(users));
-        toast('Password direset');
-      });
-    }
-
-    function deleteUser(username){
-      if(!confirm(`Hapus user ${username}?`)) return;
-      const idx = users.findIndex(x=>x.username===username);
-      if(idx<0) return;
-      users.splice(idx,1);
-      localStorage.setItem(USERS_KEY, JSON.stringify(users));
-      renderUsers(); toast('User dihapus');
-      if(me.username===username){ logout(); }
-    }
-
-    // ===== PRODUCTS CRUD =====
-    const rowsEl = q('#rows');
-    const countLbl = q('#countLbl');
-
-    function renderProducts(){
-      countLbl.textContent = products.length + ' item';
-      rowsEl.innerHTML = products.map((p,i)=>`
-        <tr>
-          <td>${escapeHTML(p.name)}</td>
-          <td><span class="badge">${escapeHTML(p.category)}</span></td>
-          <td>${IDR.format(p.price)}</td>
-          <td>${escapeHTML(p.badge || '')}</td>
-          <td style="white-space:nowrap">
-            <button class="btn btn-ghost" onclick="edit(${i})"><i class="fas fa-edit"></i> Edit</button>
-            <button class="btn btn-danger" onclick="del(${i})" ${canDelete()?'':'disabled'}><i class="fas fa-trash"></i> Hapus</button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function genId(){ return 'p' + Math.random().toString(36).slice(2,8); }
-    function edit(i){
-      const p = products[i];
-      q('#prodId').value = p.id;
-      q('#prodName').value = p.name;
-      q('#prodCategory').value = p.category;
-      q('#prodPrice').value = p.price;
-      q('#prodBadge').value = p.badge || '';
-      q('#prodImage').value = p.image;
-      q('#prodDesc').value = p.description;
-      q('#prodName').focus();
-      q('#btnDelete').disabled = !canDelete();
-    }
-    function deleteCurrent(){
-      const id = q('#prodId').value;
-      const idx = products.findIndex(p=>p.id===id);
-      if(idx<0) return;
-      del(idx);
-    }
-    function del(i){
-      if(!canDelete()) { toast('Tidak punya izin hapus','err'); return; }
-      if(!confirm('Hapus produk ini?')) return;
-      products.splice(i,1);
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
-      renderProducts(); resetForm(); toast('Produk dihapus');
-    }
-    function resetForm(){ q('#form').reset(); q('#prodId').value=''; q('#btnDelete').disabled = true; }
-    function prefillDemo(){
-      q('#prodName').value = 'Landing Page Premium';
-      q('#prodCategory').value = 'development';
-      q('#prodPrice').value = 2800000;
-      q('#prodBadge').value = 'New';
-      q('#prodImage').value = 'https://via.placeholder.com/800x533?text=Landing+Page';
-      q('#prodDesc').value = 'Landing page cepat, SEO-ready, dan desain modern untuk campaign/produk.';
-    }
-    function saveProduct(e){
-      e.preventDefault();
-      if(!canEdit()){ toast('Tidak punya izin simpan','err'); return; }
-      const id = (q('#prodId').value || '').trim();
-      const name = q('#prodName').value.trim();
-      const category = q('#prodCategory').value;
-      const price = parseInt(q('#prodPrice').value || '0', 10);
-      const badge = q('#prodBadge').value.trim();
-      const image = q('#prodImage').value.trim();
-      const description = q('#prodDesc').value.trim();
-
-      if(!name || !category || !image || !description || price < 0){
-        toast('Lengkapi data dengan benar','err'); return;
-      }
-      const payload = { id: id || genId(), name, category, price, badge, image, description };
-      const idx = products.findIndex(p=>p.id===id);
-      if (idx >= 0) products[idx] = payload; else products.push(payload);
-      localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
-      renderProducts(); resetForm(); toast('Produk disimpan');
-    }
-
-    // ===== IMPORT / EXPORT =====
-    function exportProducts(){
-      const blob = new Blob([JSON.stringify(products,null,2)],{type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url; a.download = 'digineer-products.json';
-      document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(url);
-      toast('Export berhasil');
-    }
-    function importProducts(e){
-      if(!canEdit()){ toast('Tidak punya izin import','err'); return; }
-      const file = e.target.files && e.target.files[0]; if(!file) return;
-      const reader = new FileReader();
-      reader.onload = ()=>{
-        try{
-          const data = JSON.parse(reader.result);
-          if(!Array.isArray(data)) throw new Error('Format JSON harus array');
-          products = data; localStorage.setItem(PRODUCTS_KEY, JSON.stringify(products));
-          renderProducts(); toast('Import berhasil');
-        }catch(err){ toast('Gagal import: '+err.message, 'err'); }
-      };
-      reader.readAsText(file);
-    }
-
-    // ===== PERMISSIONS UI =====
-    function applyPermissions(){
-      // tombol global
-      q('#btnNew').disabled = !canEdit();
-      q('#btnSave').disabled = !canEdit();
-      q('#btnDelete').disabled = !canDelete();
-
-      // kelola user card
-      const userCard = q('#userCard');
-      userCard.hidden = !isAdmin();
-      if(isAdmin()) renderUsers();
-    }
-
-    // ===== INIT APP =====
-    async function init(){
-      await ensureSeed();
-      const sess = getSession();
-      if(sess){
-        me = sess;
-        q('#loginView').hidden = true;
-        q('#appView').hidden = false;
-        initApp();
-      }else{
-        q('#loginView').hidden = false;
-        q('#appView').hidden = true;
-        q('#lUser').focus();
-      }
-    }
-
-    function initApp(){
-      // refresh state terbaru dari storage
-      try{ products = JSON.parse(localStorage.getItem(PRODUCTS_KEY)) || []; }catch(e){}
-      try{ users = JSON.parse(localStorage.getItem(USERS_KEY)) || []; }catch(e){}
-      q('#loginView').hidden = true;
-      q('#appView').hidden = false;
-      renderProducts();
-      applyPermissions();
-      toast(`Login sebagai ${me.username} (${me.role})`);
-    }
-
-    // boot
-    init();
-  </script>
+  <script src="admin.js"></script>
 </body>
 </html>
