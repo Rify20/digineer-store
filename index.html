@@ -286,16 +286,16 @@
       </div>
       <div class="social" aria-label="Sosial media">
         <a href="https://wa.me/6289507083879" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
-        <a href="https://instagram.com/" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="https://tiktok.com/" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://www.instagram.com/digineer_/?igsh=cmx3eW1sdXlybnk5#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@digineer?_t=ZS-90cDrIAoYOj&_r=1" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
       </div>
     </div>
   </footer>
 
   <!-- ===== Scripts ===== -->
   <script>
-    /* ---------- Data ---------- */
-    const products = [
+    /* ---------- Data (terhubung ke Admin) ---------- */
+    const DEFAULT_PRODUCTS = [
       { id:'p1', name:'Paket Branding Professional', category:'design', price:2500000, image:'https://images.unsplash.com/photo-1565688534245-05d6b5be184a?auto=format&fit=crop&w=800&q=80', description:'Logo, brand guide, stationery design, dan social media kit lengkap' },
       { id:'p2', name:'Website Company Profile', category:'development', price:3500000, image:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80', description:'Website perusahaan modern dengan CMS custom dan responsive design' },
       { id:'p3', name:'Video Company Profile', category:'video', price:5000000, image:'https://images.unsplash.com/photo-1554260570-9140fd3b7614?auto=format&fit=crop&w=800&q=80', description:'Video profil perusahaan profesional dengan animasi dan editing' },
@@ -303,6 +303,20 @@
       { id:'p5', name:'E-Commerce Website', category:'development', price:7500000, image:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80', description:'Website toko online lengkap dengan payment gateway dan admin panel' },
       { id:'p6', name:'Social Media Content', category:'design', price:800000, image:'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80', description:'Paket konten media sosial 1 bulan dengan design yang konsisten' }
     ];
+    let products = [];
+    function loadProductsFromStorage() {
+      try {
+        const stored = JSON.parse(localStorage.getItem('digineer-products'));
+        products = Array.isArray(stored) && stored.length ? stored : DEFAULT_PRODUCTS;
+      } catch(e) { products = DEFAULT_PRODUCTS; }
+    }
+    loadProductsFromStorage();
+    window.addEventListener('storage', (ev) => {
+      if (ev.key === 'digineer-products') {
+        loadProductsFromStorage();
+        displayProducts();
+      }
+    });
 
     /* ---------- State ---------- */
     let cart = JSON.parse(localStorage.getItem('digineer-cart')) || [];
@@ -313,12 +327,7 @@
 
     /* ---------- WhatsApp normalize ---------- */
     const WHATSAPP_NUMBER = '089507083879';
-    const toWaIntl = n => {
-      let s=(n||'').replace(/\D/g,'');
-      if(s.startsWith('0')) s='62'+s.slice(1);
-      if(s.startsWith('620')) s='62'+s.slice(2);
-      return s;
-    };
+    const toWaIntl = n => { let s=(n||'').replace(/\D/g,''); if(s.startsWith('0')) s='62'+s.slice(1); if(s.startsWith('620')) s='62'+s.slice(2); return s; };
     const WAPP = toWaIntl(WHATSAPP_NUMBER);
 
     /* ---------- Utilities ---------- */
@@ -346,7 +355,7 @@
     const btnMenu = document.getElementById('btnMenu');
     const drawer = document.getElementById('drawer');
     function closeDrawer(){ drawer.classList.remove('open'); btnMenu.setAttribute('aria-expanded','false'); }
-    btnMenu.addEventListener('click', ()=>{
+    if (btnMenu) btnMenu.addEventListener('click', ()=>{
       const open = drawer.classList.toggle('open');
       btnMenu.setAttribute('aria-expanded', String(open));
     });
