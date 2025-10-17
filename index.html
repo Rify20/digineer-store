@@ -166,6 +166,149 @@
       .drawer a{display:block;padding:1rem 1rem;border-top:1px solid var(--border);text-decoration:none;color:#0b1220}
       .drawer a:active{background:#f4fbfa}
     }
+
+    /* ====== PERBAIKAN TAMBAHAN UNTUK MOBILE ====== */
+    
+    /* Perbaikan spacing untuk mobile */
+    @media (max-width: 640px) {
+      .hero-inner {
+        padding: 4rem 1rem 4rem;
+      }
+      
+      .section {
+        padding: 4rem 0;
+      }
+      
+      .tools {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+      }
+      
+      .search {
+        min-width: 100%;
+      }
+      
+      .filters {
+        justify-content: center;
+        overflow-x: auto;
+        padding-bottom: 8px;
+      }
+      
+      .chip {
+        white-space: nowrap;
+        font-size: 0.9rem;
+        padding: 0.6rem 1rem;
+      }
+      
+      .card-body {
+        padding: 1.25rem;
+      }
+      
+      .meta {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      
+      .price {
+        font-size: 1.1rem;
+      }
+      
+      .btn-buy {
+        padding: 0.6rem 0.9rem;
+        font-size: 0.9rem;
+      }
+      
+      .round {
+        width: 38px;
+        height: 38px;
+      }
+      
+      .cta {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .btn {
+        width: 100%;
+        max-width: 280px;
+        justify-content: center;
+      }
+    }
+
+    /* Perbaikan untuk tablet */
+    @media (max-width: 1024px) and (min-width: 641px) {
+      .col {
+        grid-column: span 6;
+      }
+    }
+
+    /* Perbaikan aksesibilitas dan interaksi touch */
+    @media (hover: none) {
+      .card:hover {
+        transform: none;
+        box-shadow: var(--shadow-sm);
+      }
+      
+      .btn:hover, 
+      .btn-buy:hover, 
+      .round:hover, 
+      .icon-btn:hover {
+        transform: none;
+      }
+      
+      .btn:active,
+      .btn-buy:active,
+      .round:active,
+      .icon-btn:active {
+        transform: scale(0.98);
+      }
+    }
+
+    /* Loading state improvement */
+    .loading-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }
+
+    /* Error state */
+    .error-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--muted);
+    }
+
+    /* Improved focus states for accessibility */
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* Better text rendering */
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    /* Improved image rendering */
+    img {
+      image-rendering: -webkit-optimize-contrast;
+      image-rendering: crisp-edges;
+    }
   </style>
 </head>
 <body>
@@ -176,7 +319,7 @@
     <nav class="nav" aria-label="Navigasi utama">
       <a class="brand" href="#home" aria-label="Digineer Store">
         <img src="assets/logo.png" alt="Digineer Store" width="144" height="32" decoding="async" fetchpriority="high"
-             onerror="this.onerror=null;this.src='https://via.placeholder.com/144x32?text=Digineer'">
+             onerror="this.onerror=null;this.src='https://via.placeholder.com/144x32/10bfa4/ffffff?text=Digineer'">
         <span>Digineer</span>
       </a>
 
@@ -270,7 +413,7 @@
   <footer role="contentinfo">
     <div class="foot">
       <div class="brand-mini">
-        <img src="assets/logo.png" alt="Digineer" onerror="this.onerror=null;this.src='https://via.placeholder.com/120x24?text=Digineer'">
+        <img src="assets/logo.png" alt="Digineer" onerror="this.onerror=null;this.src='https://via.placeholder.com/120x24/10bfa4/ffffff?text=Digineer'">
         <span>© <span id="year"></span> Digineer Store</span>
       </div>
       <div class="social" aria-label="Sosial media">
@@ -361,7 +504,7 @@
           <article class="card">
             <img class="cover" loading="lazy" decoding="async"
                  src="${p.image}"
-                 onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400?text=Digineer';"
+                 onerror="this.onerror=null;this.src='https://via.placeholder.com/600x400/10bfa4/ffffff?text=Digineer';"
                  alt="${escapeHTML(p.name)}">
             <div class="card-body">
               <div class="cat">${getCategoryName(p.category)}</div>
