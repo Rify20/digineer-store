@@ -1,18 +1,36 @@
-[
-  {
-    "id": "p1",
-    "name": "Paket Branding Professional",
-    "category": "design",
-    "price": 2500000,
-    "image": "https://images.unsplash.com/photo-1565688534245-05d6b5be184a?auto=format&fit=crop&w=800&q=80",
-    "description": "Logo, brand guide, stationery design, dan social media kit lengkap"
-  },
-  {
-    "id": "p2",
-    "name": "Website Company Profile",
-    "category": "development",
-    "price": 3500000,
-    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-    "description": "Website perusahaan modern dengan CMS custom dan responsive design"
+<script>
+  // --- sumber data utama: assets/products.json (read-only) ---
+  let products = []; // diisi lewat fetch di init()
+
+  // fallback jika file tidak ada / error (biar halaman tetap tampil)
+  const FALLBACK_PRODUCTS = [
+    { id:'p1', name:'Paket Branding Professional', category:'design', price:2500000, image:'https://images.unsplash.com/photo-1565688534245-05d6b5be184a?auto=format&fit=crop&w=800&q=80', description:'Logo, brand guide, stationery design, dan social media kit lengkap' },
+    { id:'p2', name:'Website Company Profile', category:'development', price:3500000, image:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80', description:'Website perusahaan modern dengan CMS custom dan responsive design' },
+    { id:'p3', name:'Video Company Profile', category:'video', price:5000000, image:'https://images.unsplash.com/photo-1554260570-9140fd3b7614?auto=format&fit=crop&w=800&q=80', description:'Video profil perusahaan profesional dengan animasi dan editing' },
+    { id:'p4', name:'UI/UX Design', category:'design', price:1500000, image:'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80', description:'Desain UI/UX untuk aplikasi & website' },
+    { id:'p5', name:'E-Commerce Website', category:'development', price:7500000, image:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80', description:'Toko online + payment gateway + admin panel' },
+    { id:'p6', name:'Social Media Content', category:'design', price:800000, image:'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80', description:'Konten media sosial 1 bulan (desain konsisten)' }
+  ];
+
+  // …(biarkan kode cart/wishlistmu)…
+
+  async function loadProducts() {
+    try {
+      const r = await fetch('assets/products.json', {cache:'no-store'});
+      if (!r.ok) throw new Error('no products.json');
+      products = await r.json();
+      if (!Array.isArray(products)) throw new Error('bad format');
+    } catch (e) {
+      products = FALLBACK_PRODUCTS;
+    }
   }
-]
+
+  async function init(){
+    // …(biarkan kode init lain: skeleton, badges, year, dsb)…
+    showSkeleton();
+    await loadProducts();       // <— ambil data
+    displayProducts();          // render
+    updateCartUI();
+  }
+  document.addEventListener('DOMContentLoaded', init);
+</script>
