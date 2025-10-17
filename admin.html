@@ -3,88 +3,231 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Admin – Digineer Store</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <title>Admin Panel – Digineer</title>
+  <link rel="icon" href="assets/favicon.ico" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
   <style>
-    :root{--border:#e5e7eb;--ink:#0f172a;--muted:#64748b;--primary:#6366f1;--radius:12px}
-    *{box-sizing:border-box} body{font-family:Inter,system-ui,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);margin:0;background:#f8fafc}
-    .wrap{max-width:1000px;margin:24px auto;padding:0 16px}
-    h1{font-size:1.6rem;margin:0 0 16px}
-    .card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:16px}
-    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    .grid-1{grid-template-columns:1fr}
-    label{font-weight:600;font-size:.9rem}
-    input,select,textarea{width:100%;border:1px solid var(--border);border-radius:10px;padding:10px;font-size:14px}
-    textarea{min-height:88px;resize:vertical}
-    .actions{display:flex;gap:8px;margin-top:8px}
-    button{border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
-    .primary{background:var(--primary);color:#fff}
-    .ghost{background:#f3f4f6}
-    table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden}
-    th,td{border-top:1px solid var(--border);padding:10px;text-align:left;vertical-align:top}
-    th{background:#f9fafb}
-    .badge{font-size:.75rem;color:#475569}
-    a.btn-back{display:inline-flex;align-items:center;gap:8px;margin-bottom:12px;text-decoration:none;color:#334155}
-    a.btn-back:hover{color:#111827}
+    :root{--primary:#6366f1;--border:#e5e7eb;--bg:#f8fafc;--ink:#0f172a;--muted:#64748b;--radius:12px;--shadow:0 6px 20px rgba(2,8,23,.08)}
+    *{box-sizing:border-box}body{font-family:Inter,system-ui; background:#fff; color:var(--ink); margin:0}
+    header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--border)}
+    .bar{max-width:1100px;margin:0 auto;padding:1rem;display:flex;align-items:center;gap:1rem;justify-content:space-between}
+    .brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;color:inherit}
+    .brand img{height:24px}
+    .wrap{max-width:1100px;margin:0 auto;padding:1.25rem}
+    .card{border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:1rem}
+    h1{font-size:1.35rem;margin:0}
+    form{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:.75rem}
+    label{font-weight:700;font-size:.9rem}
+    input,select,textarea{width:100%;padding:.7rem;border:1px solid var(--border);border-radius:10px;font-size:16px}
+    textarea{min-height:90px;resize:vertical}
+    .col-6{grid-column:span 6}.col-12{grid-column:span 12}.col-4{grid-column: span 4}
+    .row{display:flex;gap:.5rem;flex-wrap:wrap}
+    .btn{border:none;border-radius:10px;padding:.75rem 1rem;font-weight:800;cursor:pointer}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-out{background:#f3f4f6}
+    .btn-danger{background:#ef4444;color:#fff}
+    table{width:100%;border-collapse:collapse;margin-top:1rem;border:1px solid var(--border)}
+    th,td{border-bottom:1px solid var(--border);padding:.75rem;vertical-align:top}
+    th{background:#f8fafc;text-align:left}
+    img.thumb{width:64px;height:48px;object-fit:cover;border-radius:8px;border:1px solid var(--border)}
+    .actions{display:flex;gap:.5rem;flex-wrap:wrap}
+    @media (max-width:768px){.col-6{grid-column:span 12}.col-4{grid-column:span 12}}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <a class="btn-back" href="index.html"><i class="fa fa-arrow-left"></i> Kembali ke Katalog</a>
-    <h1>Admin – Produk</h1>
+  <!-- Auth gate -->
+  <script src="js/auth.js"></script>
+  <script>DAuth.requireAuth('login.html');</script>
 
-    <div class="card">
-      <form id="form">
-        <div class="grid">
-          <div>
-            <label>Nama</label>
-            <input id="name" required>
-          </div>
-          <div>
-            <label>Kategori</label>
-            <select id="category">
-              <option value="design">Desain</option>
-              <option value="development">Development</option>
-              <option value="video">Video</option>
-            </select>
-          </div>
-          <div>
-            <label>Harga (IDR)</label>
-            <input id="price" type="number" min="0" step="1000" required>
-          </div>
-          <div>
-            <label>URL Gambar</label>
-            <input id="image" placeholder="https://...">
-          </div>
-        </div>
-        <div class="grid grid-1" style="margin-top:8px">
-          <div>
-            <label>Deskripsi</label>
-            <textarea id="description"></textarea>
-          </div>
-        </div>
-        <div class="actions">
-          <button class="primary" type="submit" id="btnSave"><i class="fa fa-save"></i> Simpan</button>
-          <button class="ghost" type="button" id="btnReset"><i class="fa fa-rotate-left"></i> Reset</button>
-          <span class="badge" id="status"></span>
-        </div>
-        <input type="hidden" id="id">
-      </form>
+  <header>
+    <div class="bar">
+      <a href="index.html" class="brand"><img src="assets/logo.png" alt="Digineer" onerror="this.onerror=null;this.src='https://via.placeholder.com/96x20?text=Digineer'"> <strong>Admin Panel</strong></a>
+      <div class="row">
+        <a class="btn btn-out" href="index.html"><i class="fa fa-home"></i>&nbsp;Lihat Toko</a>
+        <button class="btn btn-danger" onclick="DAuth.logout('login.html')"><i class="fa fa-right-from-bracket"></i>&nbsp;Logout</button>
+      </div>
     </div>
+  </header>
 
+  <main class="wrap">
     <div class="card">
-      <table>
+      <h1>Kelola Produk</h1>
+      <form id="formProduct">
+        <input type="hidden" id="pid">
+        <div class="col-6">
+          <label for="pname">Nama Produk</label>
+          <input id="pname" required placeholder="Contoh: Website Company Profile">
+        </div>
+        <div class="col-3">
+          <label for="pcat">Kategori</label>
+          <select id="pcat" required>
+            <option value="design">Desain</option>
+            <option value="development">Development</option>
+            <option value="video">Video</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <label for="pprice">Harga (IDR)</label>
+          <input id="pprice" type="number" min="0" step="1000" required placeholder="3500000">
+        </div>
+        <div class="col-12">
+          <label for="pimage">URL Gambar</label>
+          <input id="pimage" placeholder="https://...">
+        </div>
+        <div class="col-12">
+          <label for="pdesc">Deskripsi</label>
+          <textarea id="pdesc" required placeholder="Deskripsi singkat..."></textarea>
+        </div>
+        <div class="col-12 row">
+          <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i>&nbsp;<span id="btnText">Simpan</span></button>
+          <button class="btn btn-out" type="button" onclick="resetForm()"><i class="fa fa-rotate-left"></i>&nbsp;Reset</button>
+          <button class="btn btn-out" type="button" onclick="seedDefaults()"><i class="fa fa-database"></i>&nbsp;Reset ke Default</button>
+          <button class="btn btn-out" type="button" onclick="exportJSON()"><i class="fa fa-download"></i>&nbsp;Export JSON</button>
+          <label class="btn btn-out" style="cursor:pointer">
+            <i class="fa fa-upload"></i>&nbsp;Import JSON
+            <input id="importFile" type="file" accept="application/json" style="display:none">
+          </label>
+        </div>
+      </form>
+
+      <table id="tblProducts" aria-label="Daftar produk">
         <thead>
-          <tr><th>Nama</th><th>Kategori</th><th>Harga</th><th>Gambar</th><th>Aksi</th></tr>
+          <tr>
+            <th style="width:64px">Gambar</th>
+            <th>Nama</th>
+            <th>Kategori</th>
+            <th>Harga</th>
+            <th>Deskripsi</th>
+            <th style="width:180px">Aksi</th>
+          </tr>
         </thead>
-        <tbody id="rows"></tbody>
+        <tbody></tbody>
       </table>
     </div>
+  </main>
 
-    <p class="badge">Tips: buka tab katalog (index.html) di browser yang sama. Saat menyimpan di sini, daftar layanan pada katalog akan update otomatis.</p>
-  </div>
+  <script>
+    const LS_KEY_PRODUCTS = 'digineer-products';
+    const DEFAULTS = [
+      { id:'p1', name:'Paket Branding Professional', category:'design', price:2500000, image:'https://images.unsplash.com/photo-1565688534245-05d6b5be184a?auto=format&fit=crop&w=800&q=80', description:'Logo, brand guide, stationery design, dan social media kit lengkap' },
+      { id:'p2', name:'Website Company Profile', category:'development', price:3500000, image:'https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80', description:'Website perusahaan modern dengan CMS custom dan responsive design' },
+      { id:'p3', name:'Video Company Profile', category:'video', price:5000000, image:'https://images.unsplash.com/photo-1554260570-9140fd3b7614?auto=format&fit=crop&w=800&q=80', description:'Video profil perusahaan profesional dengan animasi dan editing' },
+      { id:'p4', name:'UI/UX Design', category:'design', price:1500000, image:'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=800&q=80', description:'Desain user interface dan experience untuk aplikasi dan website' },
+      { id:'p5', name:'E-Commerce Website', category:'development', price:7500000, image:'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=800&q=80', description:'Website toko online lengkap dengan payment gateway dan admin panel' },
+      { id:'p6', name:'Social Media Content', category:'design', price:800000, image:'https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=800&q=80', description:'Paket konten media sosial 1 bulan dengan design yang konsisten' }
+    ];
 
-  <script src="admin.js"></script>
+    const $ = s => document.querySelector(s);
+    const $$ = s => document.querySelectorAll(s);
+    const fmt = n => new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n);
+
+    let products = load();
+
+    function load(){
+      try{
+        const raw = localStorage.getItem(LS_KEY_PRODUCTS);
+        if(!raw) return [...DEFAULTS];
+        const arr = JSON.parse(raw);
+        return Array.isArray(arr) ? arr : [...DEFAULTS];
+      }catch(e){ return [...DEFAULTS]; }
+    }
+    function save(){ localStorage.setItem(LS_KEY_PRODUCTS, JSON.stringify(products)); render(); }
+
+    function render(){
+      const tb = $('#tblProducts tbody');
+      tb.innerHTML = products.map(p=>`
+        <tr>
+          <td><img class="thumb" src="${p.image}" alt="${p.name}" onerror="this.onerror=null;this.src='https://via.placeholder.com/96x64?text=Img'"></td>
+          <td><strong>${p.name}</strong></td>
+          <td>${p.category}</td>
+          <td>${fmt(p.price)}</td>
+          <td style="max-width:420px">${p.description||''}</td>
+          <td class="actions">
+            <button class="btn btn-out" onclick="edit('${p.id}')"><i class="fa fa-pen"></i>&nbsp;Edit</button>
+            <button class="btn btn-danger" onclick="del('${p.id}')"><i class="fa fa-trash"></i>&nbsp;Hapus</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function uuid(){ return 'p'+Math.random().toString(36).slice(2,9); }
+
+    const form = $('#formProduct');
+    form.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const pid = $('#pid').value.trim();
+      const data = {
+        id: pid || uuid(),
+        name: $('#pname').value.trim(),
+        category: $('#pcat').value,
+        price: Number($('#pprice').value||0),
+        image: $('#pimage').value.trim(),
+        description: $('#pdesc').value.trim()
+      };
+      if(pid){
+        const idx = products.findIndex(x=>x.id===pid);
+        if(idx>-1) products[idx] = data;
+      }else{
+        products.push(data);
+      }
+      save(); resetForm();
+    });
+
+    function edit(id){
+      const p = products.find(x=>x.id===id);
+      if(!p) return;
+      $('#pid').value = p.id;
+      $('#pname').value = p.name;
+      $('#pcat').value = p.category;
+      $('#pprice').value = p.price;
+      $('#pimage').value = p.image;
+      $('#pdesc').value = p.description||'';
+      $('#btnText').textContent = 'Update';
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function del(id){
+      if(!confirm('Hapus produk ini?')) return;
+      products = products.filter(x=>x.id!==id);
+      save();
+    }
+
+    function resetForm(){
+      form.reset();
+      $('#pid').value='';
+      $('#btnText').textContent='Simpan';
+    }
+
+    function seedDefaults(){
+      if(!confirm('Reset daftar produk ke default? Data sekarang akan tertimpa.')) return;
+      products = [...DEFAULTS];
+      save();
+      resetForm();
+    }
+
+    function exportJSON(){
+      const blob = new Blob([JSON.stringify(products,null,2)],{type:'application/json'});
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download='digineer-products.json'; a.click();
+      URL.revokeObjectURL(a.href);
+    }
+
+    $('#importFile').addEventListener('change', (e)=>{
+      const file = e.target.files?.[0];
+      if(!file) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const arr = JSON.parse(reader.result);
+          if(Array.isArray(arr)){ products = arr; save(); resetForm(); }
+          else alert('Format JSON tidak valid');
+        }catch(err){ alert('Gagal parsing JSON'); }
+      };
+      reader.readAsText(file);
+      e.target.value='';
+    });
+
+    render();
+  </script>
 </body>
 </html>
