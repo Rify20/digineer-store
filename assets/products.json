@@ -1,0 +1,18 @@
+[
+  {
+    "id": "p1",
+    "name": "Paket Branding Professional",
+    "category": "design",
+    "price": 2500000,
+    "image": "https://images.unsplash.com/photo-1565688534245-05d6b5be184a?auto=format&fit=crop&w=800&q=80",
+    "description": "Logo, brand guide, stationery design, dan social media kit lengkap"
+  },
+  {
+    "id": "p2",
+    "name": "Website Company Profile",
+    "category": "development",
+    "price": 3500000,
+    "image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
+    "description": "Website perusahaan modern dengan CMS custom dan responsive design"
+  }
+]
