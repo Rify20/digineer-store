@@ -29,7 +29,8 @@
       --primary:#10bfa4; --primary-600:#0ea894; --accent:#12d3b7; --secondary:#0b1220;
       --bg:#f7faf9; --surface:#ffffff; --ink:#0b1220; --muted:#62707f; --border:#e5e9ec;
       --success:#0fb985; --error:#ef4444;
-      --container:1120px; --header-h:64px;
+      --container:1120px; 
+      --header-h: 64px;
       --radius:14px; --radius-sm:10px;
       --shadow:0 6px 20px rgba(2,8,23,.08); --shadow-sm:0 2px 10px rgba(2,8,23,.06);
       --transition:all .25s ease;
@@ -46,49 +47,47 @@
     input,select,textarea{font-size:16px}
 
     .skip-link{position:absolute;left:-9999px;top:0;background:#111;color:#fff;padding:.5rem .75rem;border-radius:10px}
-    .skip-link:focus{left:.75rem;top:.75rem;z-index:9999}
+    .skip-link:focus{left:.75rem;top:calc(.75rem + env(safe-area-inset-top, 0px));z-index:10000}
 
-    /* Header */
+    /* Header - FIXED */
     .header{
       position:fixed;left:0;right:0;top:0;z-index:1000;
       height:calc(var(--header-h) + env(safe-area-inset-top,0px));
       padding-top:env(safe-area-inset-top,0px);
+      padding-left:env(safe-area-inset-left,0px);
+      padding-right:env(safe-area-inset-right,0px);
       background:rgba(255,255,255,.98);border-bottom:1px solid var(--border);
       -webkit-backdrop-filter:saturate(180%) blur(14px);backdrop-filter:saturate(180%) blur(14px);
-      overflow:visible;
     }
     .nav{max-width:var(--container);margin:0 auto;height:var(--header-h);
-      padding:0 12px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;overflow:visible}
-    .brand{display:flex;align-items:center;gap:.75rem;text-decoration:none}
+      padding:0 12px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px}
+    .brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;min-height:44px}
     .brand img{height:28px;width:auto;display:block}
-    .brand span{font-weight:800;letter-spacing:.2px;color:var(--primary);line-height:1}
+    .brand span{font-weight:800;letter-spacing:.2px;color:var(--primary);line-height:1;font-size:1.1rem}
     .links{display:flex;gap:24px;justify-self:center}
-    .nav-link{font-weight:600;text-decoration:none;color:#0b1220b3;padding:.25rem;border-radius:8px}
+    .nav-link{font-weight:600;text-decoration:none;color:#0b1220b3;padding:.5rem;border-radius:8px;min-height:44px;display:flex;align-items:center}
     .nav-link:hover{color:var(--primary)}
-    .actions{display:flex;gap:8px;overflow:visible}
+    .actions{display:flex;gap:8px}
     .icon-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--surface);border-radius:999px;display:grid;place-items:center;cursor:pointer;transition:var(--transition);position:relative}
     .icon-btn:hover{transform:translateY(-1px);border-color:#d1d8de;box-shadow:var(--shadow-sm);color:var(--primary)}
     .badge{position:absolute;right:-6px;top:-6px;background:var(--accent);color:#043a33;border:1px solid #8bf0e1;border-radius:999px;min-width:18px;height:18px;padding:0 6px;display:grid;place-items:center;font-size:.7rem;font-weight:800}
     .hamburger{display:none}
     .drawer{display:none}
 
-    /* Hero */
+    /* Hero - FIXED */
     .hero{
       position:relative;
       background:radial-gradient(1200px 600px at 20% -10%, rgba(16,191,164,.35) 0%, rgba(16,191,164,0) 60%),linear-gradient(140deg,#14b8a6 0%, #0ea894 28%, #0b1220 85%);
       color:#fff;
-      margin-top:calc(var(--header-h) + env(safe-area-inset-top,0px));
+      margin-top:calc(-1 * (var(--header-h) + env(safe-area-inset-top,0px)));
+      padding-top:calc(var(--header-h) + env(safe-area-inset-top,0px));
     }
-    .hero-inner{
-      max-width:var(--container);margin:0 auto;
-      padding:clamp(3rem, 8vw, 6rem) 1rem clamp(3rem, 8vw, 6rem);
-      text-align:center
-    }
-    .hero h1{font-weight:800;line-height:1.08;letter-spacing:.2px;font-size:clamp(2rem,3.6vw,3.25rem)}
-    .hero h1 .sub{display:block;color:#bdf6ed}
-    .hero p{opacity:.98;margin-top:1rem;font-size:clamp(1rem,1.5vw,1.125rem)}
-    .cta{display:flex;gap:.75rem;justify-content:center;margin-top:1.25rem;flex-wrap:wrap}
-    .btn{display:inline-flex;align-items:center;gap:.5rem;border:none;border-radius:12px;font-weight:800;cursor:pointer;transition:var(--transition);padding:.9rem 1.15rem;min-height:44px}
+    .hero-inner{max-width:var(--container);margin:0 auto;padding:clamp(4rem, 10vw, 8rem) 1rem clamp(4rem, 10vw, 8rem);text-align:center}
+    .hero h1{font-weight:800;line-height:1.08;letter-spacing:.2px;font-size:clamp(2rem, 4vw, 3.5rem);margin-bottom:1rem}
+    .hero h1 .sub{display:block;color:#bdf6ed;font-size:clamp(1.5rem, 3vw, 2.5rem)}
+    .hero p{opacity:.98;margin-top:1rem;font-size:clamp(1rem, 1.8vw, 1.25rem);max-width:600px;margin-left:auto;margin-right:auto}
+    .cta{display:flex;gap:.75rem;justify-content:center;margin-top:2rem;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:.5rem;border:none;border-radius:12px;font-weight:800;cursor:pointer;transition:var(--transition);padding:1rem 1.5rem;min-height:54px;font-size:1rem}
     .btn-primary{background:#0b1220;color:#e6fffb;border:1px solid #1b2a39}
     .btn-primary:hover{transform:translateY(-2px);box-shadow:var(--shadow);background:#101a27}
     .btn-ghost{background:rgba(255,255,255,.08);color:#ecfffd;border:1px solid rgba(255,255,255,.22)}
@@ -167,42 +166,61 @@
 
     :focus-visible{outline:3px solid var(--primary);outline-offset:2px}
     @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-    @media (max-width:768px){
+    
+    /* ====== RESPONSIVE FIXES ====== */
+    @media (max-width: 1024px) {
+      :root {--header-h: 60px;}
+    }
+    
+    @media (max-width: 768px) {
+      :root {--header-h: 56px;}
       .links{display:none}
       .hamburger{display:inline-grid;place-items:center}
-      .drawer{display:block;position:fixed;top:calc(var(--header-h) + env(safe-area-inset-top,0px));left:0;right:0;background:#fff;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:var(--transition);z-index:999}
+      .drawer{
+        display:block;position:fixed;top:calc(var(--header-h) + env(safe-area-inset-top,0px));left:0;right:0;
+        background:#fff;border-bottom:1px solid var(--border);transform:translateY(-120%);transition:var(--transition);z-index:999;
+        padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);
+      }
       .drawer.open{transform:translateY(0)}
-      .drawer a{display:block;padding:1rem 1rem;border-top:1px solid var(--border);text-decoration:none;color:#0b1220}
+      .drawer a{display:block;padding:1rem 1rem;border-top:1px solid var(--border);text-decoration:none;color:#0b1220;min-height:44px;display:flex;align-items:center}
       .drawer a:active{background:#f4fbfa}
-      
-      :root {--header-h: 60px;}
-      .hero {margin-top: calc(60px + env(safe-area-inset-top,0px));}
-      body {padding-top: calc(60px + env(safe-area-inset-top,0px));}
+      .hero-inner{padding:clamp(3rem, 8vw, 6rem) 1rem clamp(3rem, 8vw, 6rem)}
+      .brand span{font-size:1rem}
     }
-
+    
     @media (max-width: 640px) {
-      .hero-inner {padding: 3rem 1rem 3rem;}
-      .section {padding: 4rem 0;}
-      .tools {flex-direction: column;align-items: stretch;gap: 1rem;}
-      .search {min-width: 100%;}
-      .filters {justify-content: center;overflow-x: auto;padding-bottom: 8px;-webkit-overflow-scrolling: touch;}
-      .chip {white-space: nowrap;font-size: 0.9rem;padding: 0.6rem 1rem;}
-      .card-body {padding: 1.25rem;}
-      .meta {flex-wrap: wrap;gap: 0.5rem;}
-      .price {font-size: 1.1rem;}
-      .btn-buy {padding: 0.6rem 0.9rem;font-size: 0.9rem;}
-      .round {width: 38px;height: 38px;}
-      .cta {flex-direction: column;align-items: center;}
-      .btn {width: 100%;max-width: 280px;justify-content: center;}
+      :root {--header-h: 52px;}
+      .nav{padding:0 8px;gap:8px}
+      .brand{gap:0.5rem}
+      .brand img{height:24px}
+      .brand span{font-size:0.95rem}
+      .icon-btn{width:40px;height:40px}
+      .hero-inner{padding:2.5rem 1rem 2.5rem}
+      .hero h1{font-size:clamp(1.75rem, 5vw, 2.5rem)}
+      .hero h1 .sub{font-size:clamp(1.25rem, 4vw, 2rem)}
+      .cta{flex-direction:column;align-items:center}
+      .btn{width:100%;max-width:280px;justify-content:center}
+      .tools{flex-direction:column;align-items:stretch;gap:1rem}
+      .search{min-width:100%}
+      .filters{justify-content:center;overflow-x:auto;padding-bottom:8px;-webkit-overflow-scrolling:touch}
+      .chip{white-space:nowrap;font-size:0.9rem;padding:0.6rem 1rem}
+      .card-body{padding:1.25rem}
+      .meta{flex-wrap:wrap;gap:0.5rem}
+      .price{font-size:1.1rem}
+      .btn-buy{padding:0.6rem 0.9rem;font-size:0.9rem}
+      .round{width:38px;height:38px}
     }
 
-    @media (max-width: 1024px) and (min-width: 641px) {.col{grid-column:span 6}}
+    @supports(padding: max(0px)) {
+      .header, .hero, .drawer {
+        padding-left:max(12px, env(safe-area-inset-left, 12px));
+        padding-right:max(12px, env(safe-area-inset-right, 12px));
+      }
+    }
+
     @media (hover: none) {
       .card:hover,.btn:hover,.btn-buy:hover,.round:hover,.icon-btn:hover{transform:none}
       .btn:active,.btn-buy:active,.round:active,.icon-btn:active{transform:scale(0.98)}
-    }
-    @supports(padding: max(0px)) {
-      .header, .hero {padding-left: env(safe-area-inset-left);padding-right: env(safe-area-inset-right);}
     }
   </style>
 </head>
@@ -264,7 +282,6 @@
   <section class="section" id="produk" role="region" aria-label="Layanan Kami">
     <div class="container">
       <h2 class="section-title">Layanan Kami</h2>
-
       <div class="tools">
         <div class="search">
           <i class="fas fa-search" aria-hidden="true"></i>
@@ -278,7 +295,6 @@
           <button class="chip" role="tab" aria-selected="false" data-filter="print">Cetak</button>
         </div>
       </div>
-
       <div class="grid" id="productsContainer" aria-live="polite" aria-busy="true"></div>
     </div>
   </section>
@@ -412,7 +428,6 @@
 
     // ====== DATA MANAGEMENT ======
     function initializeProducts() {
-      // Coba load dari localStorage (admin panel)
       const savedProducts = localStorage.getItem('digineer-admin-products');
       
       if (savedProducts) {
@@ -428,11 +443,8 @@
         }
       }
       
-      // Fallback ke default products
       products = [...DEFAULT_PRODUCTS];
       console.log('Loaded default products:', products.length);
-      
-      // Simpan default products ke localStorage untuk konsistensi
       localStorage.setItem('digineer-admin-products', JSON.stringify(products));
     }
 
@@ -441,12 +453,10 @@
       const grid = document.getElementById('productsContainer');
       let filteredProducts = [...products];
       
-      // Apply filter
       if (currentFilter !== 'all') {
         filteredProducts = filteredProducts.filter(p => p.category === currentFilter);
       }
       
-      // Apply search
       if (currentSearch) {
         const query = currentSearch.toLowerCase();
         filteredProducts = filteredProducts.filter(p => 
@@ -455,7 +465,6 @@
         );
       }
       
-      // Show results or empty state
       if (filteredProducts.length === 0) {
         grid.innerHTML = `
           <div class="col" style="grid-column:1/-1;text-align:center;color:#62707f;padding:3rem 1rem">
@@ -472,7 +481,6 @@
         return;
       }
       
-      // Render products
       grid.innerHTML = filteredProducts.map(product => `
         <div class="col">
           <article class="card">
@@ -501,7 +509,6 @@
         </div>
       `).join('');
       
-      // Add event listeners
       document.querySelectorAll('.btn-buy').forEach(btn => {
         btn.addEventListener('click', (e) => {
           const id = e.currentTarget.getAttribute('data-id');
@@ -545,10 +552,8 @@
       const cartItems = document.getElementById('cartItems');
       const cartTotal = document.getElementById('cartTotal');
       
-      // Update badge
       cartBadge.textContent = cart.reduce((total, item) => total + item.quantity, 0);
       
-      // Update cart items
       if (cart.length === 0) {
         cartItems.innerHTML = `
           <div style="text-align:center;color:#62707f;padding:2rem 1rem">
@@ -592,7 +597,6 @@
           </div>
         `).join('');
         
-        // Add event listeners to cart buttons
         document.querySelectorAll('.cart-i .icon-btn').forEach(btn => {
           btn.addEventListener('click', (e) => {
             const id = e.currentTarget.getAttribute('data-id');
@@ -602,7 +606,6 @@
         });
       }
       
-      // Update total
       const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
       cartTotal.textContent = IDR.format(total);
     }
@@ -656,7 +659,6 @@
       window.open(whatsappUrl, '_blank');
       showNotification('Mengarahkan ke WhatsApp... 📱', 'success');
       
-      // Clear cart after successful checkout
       setTimeout(() => {
         cart = [];
         localStorage.setItem('digineer-cart', JSON.stringify(cart));
@@ -687,11 +689,9 @@
       const liveRegion = document.getElementById('liveRegion');
       if (liveRegion) liveRegion.textContent = message;
       
-      // Remove existing notification
       const existingNote = document.querySelector('.note');
       if (existingNote) existingNote.remove();
       
-      // Create new notification
       const note = document.createElement('div');
       note.className = `note ${type}`;
       note.setAttribute('role', 'status');
@@ -703,10 +703,8 @@
       
       document.body.appendChild(note);
       
-      // Show animation
       setTimeout(() => note.classList.add('show'), 50);
       
-      // Auto hide
       setTimeout(() => {
         note.classList.remove('show');
         setTimeout(() => note.remove(), 300);
@@ -735,7 +733,6 @@
     function filterProducts(category, element) {
       currentFilter = category;
       
-      // Update active chip
       document.querySelectorAll('.chip').forEach(chip => {
         chip.classList.remove('active');
         chip.setAttribute('aria-selected', 'false');
@@ -792,18 +789,15 @@
 
     // ====== INITIALIZATION ======
     function setupEventListeners() {
-      // Cart
       document.getElementById('btnCart').addEventListener('click', toggleCart);
       document.getElementById('btnCloseCart').addEventListener('click', toggleCart);
       document.getElementById('btnCheckout').addEventListener('click', checkout);
       document.getElementById('overlay').addEventListener('click', toggleCart);
       
-      // Wishlist
       document.getElementById('btnWishlist').addEventListener('click', () => {
         showNotification('Fitur wishlist akan segera hadir!', 'info');
       });
       
-      // Navigation
       document.getElementById('btnMenu').addEventListener('click', () => {
         const drawer = document.getElementById('drawer');
         const isOpen = drawer.classList.toggle('open');
@@ -817,7 +811,6 @@
         });
       });
       
-      // Hero buttons
       document.getElementById('btnExplore').addEventListener('click', () => {
         document.getElementById('produk').scrollIntoView({behavior: 'smooth'});
       });
@@ -826,12 +819,10 @@
         showNotification('Fitur konsultasi akan segera hadir!', 'info');
       });
       
-      // Search
       document.getElementById('searchInput').addEventListener('input', (e) => {
         handleSearch(e.target.value);
       });
       
-      // Filters
       document.querySelectorAll('.chip').forEach(chip => {
         chip.addEventListener('click', (e) => {
           const filter = e.currentTarget.getAttribute('data-filter');
@@ -841,25 +832,19 @@
     }
     
     function init() {
-      // Initialize products
       initializeProducts();
-      
-      // Setup UI
       setupEventListeners();
       updateCartUI();
       renderProducts();
       
-      // Update badges and year
       document.getElementById('wishlistBadge').textContent = wishlist.length;
       document.getElementById('year').textContent = new Date().getFullYear();
       
-      // Welcome message
       setTimeout(() => {
         showNotification('Selamat datang di Digineer Store! 🚀', 'success');
       }, 1000);
     }
 
-    // Start the application
     document.addEventListener('DOMContentLoaded', init);
   </script>
 </body>
